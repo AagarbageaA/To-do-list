@@ -1,6 +1,7 @@
 # To-Do List App
 
-This is a simple and intuitive To-Do List application with a user-friendly interface. Below are the key features and functionalities:
+This To-Do List application has been implemented using Flutter, providing a simple and intuitive user interface.
+Below are the key features and functionalities:
 
 ## Initial Page
 
