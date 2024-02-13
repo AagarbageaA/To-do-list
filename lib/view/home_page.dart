@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_template/model/user.dart';
+import 'package:flutter_application_template/view_model/google.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'add_event_page.dart';
-import 'event_data.dart';
+import '../model/event_data.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,36 +16,7 @@ class _HomePageState extends State<HomePage> {
   List<String> folderList = ['Folder 1', 'Folder 2']; // Add initial folders
   String selectedFolder = 'All';
 
-  void _addFolder(String newFolderName) {
-    if (newFolderName.isNotEmpty) {
-      setState(() {
-        folderList.add(newFolderName);
-      });
-    }
-  }
-
-  void _renameFolder(String folderName, String newFolderName) {
-    if (folderName.isNotEmpty && newFolderName.isNotEmpty) {
-      setState(() {
-        int index =
-            folderList.indexOf(folderName); // find current folder's index
-        folderList[index] = newFolderName;
-      });
-    }
-  }
-
-  void _deleteFolder(String folderName) {
-    setState(() {
-      folderList.remove(folderName);
-    });
-  }
-
-  void _selectFolder(String folderName) {
-    setState(() {
-      selectedFolder = folderName;
-      Navigator.pop(context); // Close the drawer after selecting a folder
-    });
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +24,16 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         // Main area title
         title: Text('To-do List - $selectedFolder'), // Update the app bar title
+        actions: [
+          if (context.watch<UserViewModel>().user == null)
+                ElevatedButton(
+                  onPressed: () => context.read<UserViewModel>().signInWithGoogle(),
+                  child: const Text("Sign in"),
+                )
+          else Text("log in with ${context.read<UserViewModel>().user?.displayName}")
+                ],
+          
+          
       ),
       drawer: Drawer(
         // Left-slide page
@@ -233,7 +217,36 @@ class _HomePageState extends State<HomePage> {
       child: Text(text),
     );
   }
+  void _addFolder(String newFolderName) {
+    if (newFolderName.isNotEmpty) {
+      setState(() {
+        folderList.add(newFolderName);
+      });
+    }
+  }
 
+  void _renameFolder(String folderName, String newFolderName) {
+    if (folderName.isNotEmpty && newFolderName.isNotEmpty) {
+      setState(() {
+        int index =
+            folderList.indexOf(folderName); // find current folder's index
+        folderList[index] = newFolderName;
+      });
+    }
+  }
+
+  void _deleteFolder(String folderName) {
+    setState(() {
+      folderList.remove(folderName);
+    });
+  }
+
+  void _selectFolder(String folderName) {
+    setState(() {
+      selectedFolder = folderName;
+      Navigator.pop(context); // Close the drawer after selecting a folder
+    });
+  }
   void _showAddFolderDialog(BuildContext context) {
     TextEditingController folderNameController = TextEditingController();
     showDialog(

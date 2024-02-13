@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'event_data.dart';
+import '../model/event_data.dart';
 
 class AddEventPage extends StatefulWidget {
   final Function(EventData) onSubmit;
@@ -62,10 +62,12 @@ class _AddEventPageState extends State<AddEventPage> {
                   lastDate: DateTime(2101),
                 );
                 if (selectedDate != null) {
-                  dateController.text =
-                      "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}";
+                  // Format the selected date to "yyyy-MM-dd" format
+                  String formattedDate = "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
+                  dateController.text = formattedDate;
                 }
               },
+
               child: AbsorbPointer(
                 child: TextField(
                   controller: dateController,
