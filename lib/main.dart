@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-        ChangeNotifierProvider(create: (_) => UserViewModel()),
+        ChangeNotifierProvider(create: (_) => GoogleViewModel()),
       ],child: MaterialApp(
       title: 'To-do List',
       theme: ThemeData(
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
             const Color.fromRGBO(229, 146, 74, 0.678)),
       ),
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: const HomePage(),
       )
     );
     

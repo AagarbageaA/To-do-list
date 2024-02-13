@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_template/model/user.dart';
+import 'package:flutter_application_template/repo/user_repo.dart';
 import 'package:flutter_application_template/view_model/google.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'add_event_page.dart';
-import '../model/event_data.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  List<EventData> eventDataList = [];
-  List<String> folderList = ['Folder 1', 'Folder 2']; // Add initial folders
+  List<TodoItem> todoItemList = [];
+  List<String> folderList = []; // Add initial folders
   String selectedFolder = 'All';
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +25,24 @@ class _HomePageState extends State<HomePage> {
         // Main area title
         title: Text('To-do List - $selectedFolder'), // Update the app bar title
         actions: [
-          if (context.watch<UserViewModel>().user == null)
-                ElevatedButton(
-                  onPressed: () => context.read<UserViewModel>().signInWithGoogle(),
-                  child: const Text("Sign in"),
-                )
-          else Text("log in with ${context.read<UserViewModel>().user?.displayName}")
-                ],
+          if (context.watch<GoogleViewModel>().user == null)
+            ElevatedButton(
+              onPressed: () =>
+                  context.read<GoogleViewModel>().signInWithGoogle().then((_) {
+                _loadData(); // Load data after sign-in
+              }),
+              child: const Text("Sign in"),
+            )
+          else Column(
+            children:[
+              Text("log in with ${context.read<GoogleViewModel>().user?.displayName}"),
+              ElevatedButton(
+                      onPressed: () => context.read<GoogleViewModel>().signOut(),
+                      child: const Text("Sign out"),
+                    ),
+          ])
+              
+        ],
           
           
       ),
@@ -138,27 +149,26 @@ class _HomePageState extends State<HomePage> {
                     thickness: 3,
                     color: Color.fromARGB(58, 99, 70, 2),
                   ),
-                  for (int i = 0; i < eventDataList.length; i++) // Events
+                  for (int i = 0; i < todoItemList.length; i++) // Events
                     if (selectedFolder == 'All' ||
-                        eventDataList[i].folder == selectedFolder)
+                        todoItemList[i].folder == selectedFolder)
                       Row(
                         children: [
                           Expanded(
-                            child: _buildTableCell(eventDataList[i].name),
+                            child: _buildTableCell(todoItemList[i].name),
                           ),
                           Expanded(
                             child: _buildTableCell(
-                              DateFormat.yMd().format(eventDataList[i].date),
-                            ),
+                              todoItemList[i].date),
                           ),
                           Expanded(
-                            child: _buildTableCell(eventDataList[i].place),
+                            child: _buildTableCell(todoItemList[i].place),
                           ),
                           Expanded(
-                            child: _buildTableCell(eventDataList[i].note),
+                            child: _buildTableCell(todoItemList[i].note),
                           ),
                           Expanded(
-                            child: _buildTableCell(eventDataList[i].folder),
+                            child: _buildTableCell(todoItemList[i].folder),
                           ),
                           Container(
                             margin: const EdgeInsets.only(right: 25),
@@ -169,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               onPressed: () {
                                 setState(() {
-                                  eventDataList.removeAt(i);
+                                  todoItemList.removeAt(i);
                                 });
                               },
                             ),
@@ -182,30 +192,36 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        // Add event
-        onPressed: () {
-          showModalBottomSheet(
-            // Bottom page
-            context: context,
-            builder: (BuildContext context) {
-              return AddEventPage(
-                onSubmit: (data) {
-                  setState(() {
-                    eventDataList.add(data);
-
-                    eventDataList.sort(
-                        (a, b) => a.date.compareTo(b.date)); // Sorted with date
-                  });
-                  Navigator.of(context).pop();
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: _upload,
+            child: const Icon(Icons.cloud_upload),
+          ),
+          const SizedBox(height: 16),
+          FloatingActionButton(
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return AddEventPage(
+                    onSubmit: (data) {
+                      setState(() {
+                        todoItemList.add(data);
+                        todoItemList.sort((a, b) => a.date.compareTo(b.date));
+                      });
+                      Navigator.of(context).pop();
+                    },
+                    folderList: folderList,
+                    onAddFolder: _addFolder,
+                  );
                 },
-                folderList: folderList,
-                onAddFolder: _addFolder,
               );
             },
-          );
-        },
-        child: const Icon(Icons.add),
+            child: const Icon(Icons.add),
+          ),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
@@ -341,5 +357,38 @@ class _HomePageState extends State<HomePage> {
         );
       },
     );
+  }
+  void _loadData() async {
+    final googleViewModel = context.read<GoogleViewModel>();
+    if (googleViewModel.user != null) {
+      final user = await UserRepo.read(googleViewModel.user!.uid);
+      if (user != null) {
+        setState(() {
+          folderList = user.folders;
+          todoItemList = user.todoList.map((todoItem) {
+            return TodoItem(
+              name: todoItem.name,
+              date: todoItem.date , 
+              place: todoItem.place,
+              note: todoItem.note ,
+              folder: todoItem.folder ,
+            );
+          }).toList();
+        });
+      } 
+    }
+  }
+  Future<void> _upload() async {
+    final googleViewModel = context.read<GoogleViewModel>();
+    // log in?
+    if (googleViewModel.user != null) {
+
+        final user = User(
+          uid: googleViewModel.user!.uid,
+          todoList: todoItemList,
+          folders: folderList,
+        );
+        await UserRepo.update(user);
+    } 
   }
 }

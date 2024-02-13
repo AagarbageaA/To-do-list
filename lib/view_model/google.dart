@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_template/repo/user_repo.dart';
 
 /// 管理使用者帳號資訊、預設值，以及登入、登出行為
-class UserViewModel with ChangeNotifier {
+class GoogleViewModel with ChangeNotifier {
   final GoogleAuthProvider _googleAuthProvider = GoogleAuthProvider();
   User? _user;
   User? get user => _user;
 
-  UserViewModel() {
+  GoogleViewModel() {
     // 設定會使用到的 Google API scopes
     // 可參考 https://developers.google.com/identity/protocols/oauth2/scopes?hl=zh-tw
     _googleAuthProvider

@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import '../model/event_data.dart';
+import 'package:flutter_application_template/model/user.dart';
 
 class AddEventPage extends StatefulWidget {
-  final Function(EventData) onSubmit;
+  final Function(TodoItem) onSubmit;
   final List<String> folderList;
   final Function(String) onAddFolder;
 
-  AddEventPage({
+  const AddEventPage({super.key, 
     required this.onSubmit,
     required this.folderList,
     required this.onAddFolder,
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _AddEventPageState createState() => _AddEventPageState();
 }
 
@@ -135,11 +136,11 @@ class _AddEventPageState extends State<AddEventPage> {
                 ElevatedButton(
                   onPressed: () {
                     String name = nameController.text;
-                    DateTime date = DateTime.parse(dateController.text);
+                    String date = dateController.text;
                     String place = placeController.text;
                     String note = noteController.text;
 
-                    EventData eventData = EventData(
+                    TodoItem tempTodoItem = TodoItem(
                       name: name,
                       date: date,
                       place: place,
@@ -147,7 +148,7 @@ class _AddEventPageState extends State<AddEventPage> {
                       folder: selectedFolderController.text,
                     );
 
-                    widget.onSubmit(eventData);
+                    widget.onSubmit(tempTodoItem);
                   },
                   child: const Text('Submit'),
                 ),
