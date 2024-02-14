@@ -112,8 +112,8 @@ class _AddEventPageState extends State<AddEventPage> {
                         return ShowAddFolderDialog(
                           onAddFolder: (String folderName) {
                             setState(() {
-                              widget.onAddFolder(folderName); // 使用回调函数添加文件夹
-                              selectedFolderController.text = folderName; // 更新所选文件夹
+                              widget.onAddFolder(folderName);
+                              selectedFolderController.text = folderName;
                             });
                           },
                         );
@@ -139,7 +139,27 @@ class _AddEventPageState extends State<AddEventPage> {
                     child: Text('Add Folder'),
                   ),
                 ],
+              )
+            else
+              ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return ShowAddFolderDialog(
+                        onAddFolder: (String folderName) {
+                          setState(() {
+                            widget.onAddFolder(folderName);
+                            selectedFolderController.text = folderName;
+                          });
+                        },
+                      );
+                    },
+                  );
+                },
+                child: const Text('Add Folder'),
               ),
+
 
             const SizedBox(height: 10),
             Row(
