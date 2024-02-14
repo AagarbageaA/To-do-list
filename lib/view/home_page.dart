@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_template/model/user.dart';
 import 'package:flutter_application_template/repo/user_repo.dart';
 import 'package:flutter_application_template/view_model/google.dart';
+import 'package:flutter_application_template/widget/cell.dart';
 import 'package:provider/provider.dart';
 import 'add_event_page.dart';
 
@@ -127,19 +128,19 @@ class _HomePageState extends State<HomePage> {
                     // Column title row
                     children: [
                       Expanded(
-                        child: _buildTableCell('Name'),
+                        child: buildTableCell('Name'),
                       ),
                       Expanded(
-                        child: _buildTableCell('Date'),
+                        child: buildTableCell('Date'),
                       ),
                       Expanded(
-                        child: _buildTableCell('Place'),
+                        child: buildTableCell('Place'),
                       ),
                       Expanded(
-                        child: _buildTableCell('Note'),
+                        child: buildTableCell('Note'),
                       ),
                       Expanded(
-                        child: _buildTableCell('Folder'),
+                        child: buildTableCell('Folder'),
                       ),
                       const SizedBox(
                           width: 65), // Save place for deletion button
@@ -155,20 +156,20 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         children: [
                           Expanded(
-                            child: _buildTableCell(todoItemList[i].name),
+                            child: buildTableCell(todoItemList[i].name),
                           ),
                           Expanded(
-                            child: _buildTableCell(
+                            child: buildTableCell(
                               todoItemList[i].date),
                           ),
                           Expanded(
-                            child: _buildTableCell(todoItemList[i].place),
+                            child: buildTableCell(todoItemList[i].place),
                           ),
                           Expanded(
-                            child: _buildTableCell(todoItemList[i].note),
+                            child: buildTableCell(todoItemList[i].note),
                           ),
                           Expanded(
-                            child: _buildTableCell(todoItemList[i].folder),
+                            child: buildTableCell(todoItemList[i].folder),
                           ),
                           Container(
                             margin: const EdgeInsets.only(right: 25),
@@ -227,12 +228,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildTableCell(String text) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      child: Text(text),
-    );
-  }
+  
   void _addFolder(String newFolderName) {
     if (newFolderName.isNotEmpty) {
       setState(() {
