@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_template/model/user.dart';
+import 'package:flutter_application_template/view/add_folder_dialog.dart';
 
 class AddEventPage extends StatefulWidget {
   final Function(TodoItem) onSubmit;
@@ -101,7 +102,19 @@ class _AddEventPageState extends State<AddEventPage> {
                 value: selectedFolderController.text,
                 onChanged: (String? value) {
                   if (value == 'Add Folder') {
-                    _showAddFolderDialog(context);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ShowAddFolderDialog(
+                          onAddFolder: (String folderName) {
+                            setState(() {
+                              widget.onAddFolder(folderName); // 使用回调函数添加文件夹
+                              selectedFolderController.text = folderName; // 更新所选文件夹
+                            });
+                          },
+                        );
+                      },
+                    );
                   } else if (value != null) {
                     setState(() {
                       selectedFolderController.text = value;
@@ -123,6 +136,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   ),
                 ],
               ),
+
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,68 +174,5 @@ class _AddEventPageState extends State<AddEventPage> {
     );
   }
 
-  void _showAddFolderDialog(BuildContext context) {
-    TextEditingController folderNameController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Add New Folder'),
-          content: TextField(
-            controller: folderNameController,
-            decoration: const InputDecoration(
-              labelText: 'Folder Name',
-              focusedBorder: OutlineInputBorder(
-                borderSide:
-                    BorderSide(color: Color.fromARGB(255, 243, 142, 33)),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color.fromARGB(84, 197, 127, 29)),
-              ),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                String folderName = folderNameController.text;
-                if (folderName.isNotEmpty) {
-                  widget.onAddFolder(folderName);
-                  Navigator.pop(context); // 關掉
-                  setState(() {
-                    selectedFolderController.text = folderName; // 更新顯示的folder
-                  });
-                } else {
-                  // 未輸入->顯示錯誤對話框
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        content: const Text("Submit New Folder Name"),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }
-              },
-              child: const Text('Add'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+  
 }

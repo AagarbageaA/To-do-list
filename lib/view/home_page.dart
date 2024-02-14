@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_template/model/user.dart';
 import 'package:flutter_application_template/repo/user_repo.dart';
+import 'package:flutter_application_template/view/add_folder_dialog.dart';
 import 'package:flutter_application_template/view_model/google.dart';
 import 'package:flutter_application_template/widget/cell.dart';
 import 'package:provider/provider.dart';
@@ -110,7 +111,19 @@ class _HomePageState extends State<HomePage> {
               // Add folder
               title: const Text('Add Folder'),
               onTap: () {
-                _showAddFolderDialog(context);
+                showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ShowAddFolderDialog(
+                          onAddFolder: (String folderName) {
+                            setState(() {
+                              folderList.add(folderName); // 使用回调函数添加文件夹
+                              selectedFolder= folderName; // 更新所选文件夹
+                            });
+                          },
+                        );
+                      },
+                    );
               },
             ),
           ],
@@ -259,39 +272,7 @@ class _HomePageState extends State<HomePage> {
       Navigator.pop(context); // Close the drawer after selecting a folder
     });
   }
-  void _showAddFolderDialog(BuildContext context) {
-    TextEditingController folderNameController = TextEditingController();
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Add Folder'),
-          content: TextField(
-            controller: folderNameController,
-            decoration: const InputDecoration(labelText: 'Folder Name'),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                String folderName = folderNameController.text;
-                if (folderName.isNotEmpty) {
-                  _addFolder(folderName);
-                  Navigator.pop(context);
-                }
-              },
-              child: const Text('Add'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+  
 
   void _showRenameFolderDialog(BuildContext context, String folderName) {
     TextEditingController newFolderNameController =
@@ -320,7 +301,7 @@ class _HomePageState extends State<HomePage> {
                 }
                 Navigator.pop(context);
               },
-              child: const Text('Rename'),
+              child: const Text('OK'),
             ),
           ],
         );
