@@ -97,6 +97,10 @@ class _AddEventPageState extends State<AddEventPage> {
               decoration: const InputDecoration(hintText: 'Note'),
             ),
             const SizedBox(height: 10),
+            const Text(
+              'Folder',
+              style: TextStyle(fontSize: 10),
+            ),
             if (widget.folderList.isNotEmpty)
               DropdownButton<String>(
                 value: selectedFolderController.text,
