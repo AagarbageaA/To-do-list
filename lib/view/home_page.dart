@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_template/model/user.dart';
 import 'package:flutter_application_template/repo/user_repo.dart';
 import 'package:flutter_application_template/view/add_folder_dialog.dart';
+import 'package:flutter_application_template/view/rename_folder_dialog.dart';
 import 'package:flutter_application_template/view_model/google.dart';
 import 'package:flutter_application_template/widget/cell.dart';
 import 'package:provider/provider.dart';
@@ -94,7 +95,15 @@ class _HomePageState extends State<HomePage> {
                       // Edit folder name
                       icon: const Icon(Icons.edit),
                       onPressed: () {
-                        _showRenameFolderDialog(context, folderName);
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return RenameFolderDialog(
+                              folderName: folderName,
+                              onRenameFolder: _renameFolder,
+                            );
+                          },
+                        );
                       },
                     ),
                     IconButton(
@@ -274,40 +283,7 @@ class _HomePageState extends State<HomePage> {
   }
   
 
-  void _showRenameFolderDialog(BuildContext context, String folderName) {
-    TextEditingController newFolderNameController =
-        TextEditingController(text: folderName);
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Rename Folder'),
-          content: TextField(
-            controller: newFolderNameController,
-            decoration: const InputDecoration(labelText: 'New Folder Name'),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                String newFolderName = newFolderNameController.text;
-                if (newFolderName.isNotEmpty) {
-                  _renameFolder(folderName, newFolderName);
-                }
-                Navigator.pop(context);
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+  
 
   void _showDeleteFolderDialog(BuildContext context, String folderName) {
     showDialog(
