@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_template/model/user.dart';
 import 'package:flutter_application_template/repo/user_repo.dart';
 import 'package:flutter_application_template/view/add_folder_dialog.dart';
+import 'package:flutter_application_template/view/delete_folder_dialog.dart';
 import 'package:flutter_application_template/view/rename_folder_dialog.dart';
 import 'package:flutter_application_template/view_model/google.dart';
 import 'package:flutter_application_template/widget/cell.dart';
@@ -110,7 +111,15 @@ class _HomePageState extends State<HomePage> {
                       // Delete folder
                       icon: const Icon(Icons.delete),
                       onPressed: () {
-                        _showDeleteFolderDialog(context, folderName);
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return DeleteFolderDialog(
+                              folderName: folderName,
+                              onDeleteFolder: _deleteFolder,
+                            );
+                          },
+                        );
                       },
                     ),
                   ],
@@ -283,34 +292,6 @@ class _HomePageState extends State<HomePage> {
   }
   
 
-  
-
-  void _showDeleteFolderDialog(BuildContext context, String folderName) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Delete Folder'),
-          content: Text('Are you sure you want to delete $folderName?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                _deleteFolder(folderName);
-                Navigator.pop(context);
-              },
-              child: const Text('Delete'),
-            ),
-          ],
-        );
-      },
-    );
-  }
   void _loadData() async {
     final googleViewModel = context.read<GoogleViewModel>();
     if (googleViewModel.user != null) {
