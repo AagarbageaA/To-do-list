@@ -4,7 +4,10 @@ class RenameFolderDialog extends StatelessWidget {
   final String folderName;
   final Function(String, String) onRenameFolder;
 
-  RenameFolderDialog({required this.folderName, required this.onRenameFolder});
+  const RenameFolderDialog({
+    super.key, 
+    required this.folderName, 
+    required this.onRenameFolder});
 
   @override
   Widget build(BuildContext context) {

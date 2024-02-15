@@ -5,6 +5,7 @@ class DeleteFolderDialog extends StatelessWidget {
   final Function(String) onDeleteFolder;
 
   const DeleteFolderDialog({
+    super.key, 
     required this.folderName,
     required this.onDeleteFolder,
   });

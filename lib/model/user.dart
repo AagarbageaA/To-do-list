@@ -11,18 +11,16 @@ class User {
 
   //get json[Map], return [User]
   factory User.fromJson(Map<String, dynamic> json) => User(
-        uid: json["uid"],
-        todoList: (json["todoList"] as List<Map<String, dynamic>>)
-          .map((itemJson) => TodoItem.fromJson(itemJson))
-          .toList(),
-        folders: (json["folders"] as List).map((folder) => folder as String).toList(),
-      );
+    uid: json["uid"],
+    todoList: json["todoList"].map((todo) => TodoItem.fromJson(todo)),
+    folders: json["folders"].map((folder) => folder),
+  );
 
   Map<String, dynamic> toJson() => {
-        "uid": uid,
-        "todoList": todoList.map((item) => item.tojson()).toList(),
-        "folders": folders,
-      };
+    "uid": uid,
+    "todoList": todoList.map((item) => item.tojson()),
+    "folders": folders,
+  };
 }
 
 class TodoItem  {

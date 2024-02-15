@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_template/model/user.dart';
 import 'package:flutter_application_template/view/add_folder_dialog.dart';
+import 'package:flutter_application_template/view_model/google.dart';
+import 'package:flutter_application_template/view_model/homepage_view_model.dart';
+import 'package:flutter_application_template/widget/elevated_button.dart';
+import 'package:provider/provider.dart';
 
 class AddEventPage extends StatelessWidget {
   final Function(TodoItem) onSubmit;
@@ -27,8 +31,9 @@ class AddEventPage extends StatelessWidget {
       selectedFolderController.text = folderList[0];
     }
 
-    return SingleChildScrollView(
-      child: Container(
+    return Consumer2<GoogleViewModel,HomePageViewModel>(
+      builder: (context, goodleVM, homeVM, child)=>
+      Container(
         padding: const EdgeInsets.all(8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -127,7 +132,10 @@ class AddEventPage extends StatelessWidget {
                 ],
               )
             else
-              ElevatedButton(
+              CustomElevatedButton(
+                textSize:16,
+                wid:15,
+                hei:10,
                 onPressed: () {
                   showDialog(
                     context: context,
@@ -147,13 +155,19 @@ class AddEventPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ElevatedButton(
+                CustomElevatedButton(
+                textSize:16,
+                wid:15,
+                hei:100,
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                   child: const Text('Cancel'),
                 ),
-                ElevatedButton(
+                CustomElevatedButton(
+                textSize:16,
+                wid:30,
+                hei:100,
                   onPressed: () {
                     String name = nameController.text;
                     String date = dateController.text;
