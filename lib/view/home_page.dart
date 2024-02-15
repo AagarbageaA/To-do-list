@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_template/model/user.dart';
-import 'package:flutter_application_template/repo/user_repo.dart';
 import 'package:flutter_application_template/view/add_folder_dialog.dart';
 import 'package:flutter_application_template/view/delete_folder_dialog.dart';
 import 'package:flutter_application_template/view/rename_folder_dialog.dart';
