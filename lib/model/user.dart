@@ -9,6 +9,7 @@ class User {
     required this.folders,
   });
 
+  //get json[Map], return [User]
   factory User.fromJson(Map<String, dynamic> json) => User(
         uid: json["uid"],
         todoList: (json["todoList"] as List<Map<String, dynamic>>)

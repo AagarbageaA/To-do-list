@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_template/firebase_options.dart';
 import 'package:flutter_application_template/view_model/google.dart';
+import 'package:flutter_application_template/view_model/homepage_view_model.dart';
 import 'package:provider/provider.dart';
 import 'view/home_page.dart';
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
         ChangeNotifierProvider(create: (_) => GoogleViewModel()),
+        ChangeNotifierProvider(create: (_) => HomePageViewModel()),
       ],child: MaterialApp(
       title: 'To-do List',
       theme: ThemeData(

@@ -2,40 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_template/model/user.dart';
 import 'package:flutter_application_template/view/add_folder_dialog.dart';
 
-class AddEventPage extends StatefulWidget {
+class AddEventPage extends StatelessWidget {
   final Function(TodoItem) onSubmit;
   final List<String> folderList;
   final Function(String) onAddFolder;
 
-  const AddEventPage({super.key, 
+  const AddEventPage({
+    super.key,
     required this.onSubmit,
     required this.folderList,
     required this.onAddFolder,
   });
 
   @override
-  // ignore: library_private_types_in_public_api
-  _AddEventPageState createState() => _AddEventPageState();
-}
-
-class _AddEventPageState extends State<AddEventPage> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
-  TextEditingController placeController = TextEditingController();
-  TextEditingController noteController = TextEditingController();
-  TextEditingController selectedFolderController =
-      TextEditingController(); // 新增 selectedFolderController
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.folderList.isNotEmpty) {
-      selectedFolderController.text = widget.folderList[0];
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    TextEditingController nameController = TextEditingController();
+    TextEditingController dateController = TextEditingController();
+    TextEditingController placeController = TextEditingController();
+    TextEditingController noteController = TextEditingController();
+    TextEditingController selectedFolderController =
+        TextEditingController(); // 新增 selectedFolderController
+
+    if (folderList.isNotEmpty) {
+      selectedFolderController.text = folderList[0];
+    }
+
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.all(8),
@@ -69,7 +60,6 @@ class _AddEventPageState extends State<AddEventPage> {
                   dateController.text = formattedDate;
                 }
               },
-
               child: AbsorbPointer(
                 child: TextField(
                   controller: dateController,
@@ -101,7 +91,7 @@ class _AddEventPageState extends State<AddEventPage> {
               'Folder',
               style: TextStyle(fontSize: 10),
             ),
-            if (widget.folderList.isNotEmpty)
+            if (folderList.isNotEmpty)
               DropdownButton<String>(
                 value: selectedFolderController.text,
                 onChanged: (String? value) {
@@ -111,22 +101,18 @@ class _AddEventPageState extends State<AddEventPage> {
                       builder: (BuildContext context) {
                         return ShowAddFolderDialog(
                           onAddFolder: (String folderName) {
-                            setState(() {
-                              widget.onAddFolder(folderName);
-                              selectedFolderController.text = folderName;
-                            });
+                            onAddFolder(folderName);
+                            selectedFolderController.text = folderName;
                           },
                         );
                       },
                     );
                   } else if (value != null) {
-                    setState(() {
-                      selectedFolderController.text = value;
-                    });
+                    selectedFolderController.text = value;
                   }
                 },
                 items: [
-                  ...widget.folderList.map<DropdownMenuItem<String>>(
+                  ...folderList.map<DropdownMenuItem<String>>(
                     (String folder) {
                       return DropdownMenuItem<String>(
                         value: folder,
@@ -148,10 +134,8 @@ class _AddEventPageState extends State<AddEventPage> {
                     builder: (BuildContext context) {
                       return ShowAddFolderDialog(
                         onAddFolder: (String folderName) {
-                          setState(() {
-                            widget.onAddFolder(folderName);
-                            selectedFolderController.text = folderName;
-                          });
+                          onAddFolder(folderName);
+                          selectedFolderController.text = folderName;
                         },
                       );
                     },
@@ -159,8 +143,6 @@ class _AddEventPageState extends State<AddEventPage> {
                 },
                 child: const Text('Add Folder'),
               ),
-
-
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -186,7 +168,7 @@ class _AddEventPageState extends State<AddEventPage> {
                       folder: selectedFolderController.text,
                     );
 
-                    widget.onSubmit(tempTodoItem);
+                    onSubmit(tempTodoItem);
                   },
                   child: const Text('Submit'),
                 ),
@@ -197,6 +179,4 @@ class _AddEventPageState extends State<AddEventPage> {
       ),
     );
   }
-
-  
 }

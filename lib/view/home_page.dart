@@ -5,50 +5,40 @@ import 'package:flutter_application_template/view/add_folder_dialog.dart';
 import 'package:flutter_application_template/view/delete_folder_dialog.dart';
 import 'package:flutter_application_template/view/rename_folder_dialog.dart';
 import 'package:flutter_application_template/view_model/google.dart';
+import 'package:flutter_application_template/view_model/homepage_view_model.dart';
 import 'package:flutter_application_template/widget/cell.dart';
 import 'package:provider/provider.dart';
 import 'add_event_page.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  List<TodoItem> todoItemList = [];
-  List<String> folderList = []; // Add initial folders
-  String selectedFolder = 'All';
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Consumer2<GoogleViewModel,HomePageViewModel>(
+      builder: (context, goodleVM, homeVM, child)=>
+        Scaffold(
       appBar: AppBar(
         // Main area title
-        title: Text('To-do List - $selectedFolder'), // Update the app bar title
+        title: Text('To-do List - ${homeVM.selectedFolder}'), // Update the app bar title
         actions: [
           if (context.watch<GoogleViewModel>().user == null)
             ElevatedButton(
               onPressed: () =>
-                  context.read<GoogleViewModel>().signInWithGoogle().then((_) {
-                _loadData(); // Load data after sign-in
+                  goodleVM.signInWithGoogle().then((_) {
+                _loadData(goodleVM, homeVM);
               }),
               child: const Text("Sign in"),
             )
           else Column(
             children:[
-              Text("log in with ${context.read<GoogleViewModel>().user?.displayName}"),
+              Text("log in with ${goodleVM.user?.displayName}"),
               ElevatedButton(
-                      onPressed: () => context.read<GoogleViewModel>().signOut(),
+                      onPressed: () => goodleVM.signOut(),
                       child: const Text("Sign out"),
                     ),
           ])
-              
         ],
-          
-          
       ),
       drawer: Drawer(
         // Left-slide page
@@ -62,7 +52,7 @@ class _HomePageState extends State<HomePage> {
               ),
               child: Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center, // 將文字置中
+                  mainAxisAlignment: MainAxisAlignment.center, // 将文字置中
                   children: [
                     Text(
                       // Title text
@@ -80,14 +70,14 @@ class _HomePageState extends State<HomePage> {
               // Fixed folder (All)
               title: const Text('All'),
               onTap: () {
-                _selectFolder('All');
+                _selectFolder(context, 'All');
               },
             ),
-            for (String folderName in folderList) // List all folders
+            for (String folderName in homeVM.folderList) // List all folders
               ListTile(
                 title: Text(folderName),
                 onTap: () {
-                  _selectFolder(folderName);
+                  _selectFolder(context, folderName);
                 },
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -101,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                           builder: (BuildContext context) {
                             return RenameFolderDialog(
                               folderName: folderName,
-                              onRenameFolder: _renameFolder,
+                              onRenameFolder: (folderName,newFolderName) => _renameFolder(context, folderName, newFolderName),
                             );
                           },
                         );
@@ -116,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                           builder: (BuildContext context) {
                             return DeleteFolderDialog(
                               folderName: folderName,
-                              onDeleteFolder: _deleteFolder,
+                              onDeleteFolder: (folderName) => _deleteFolder(context, folderName),
                             );
                           },
                         );
@@ -134,10 +124,7 @@ class _HomePageState extends State<HomePage> {
                       builder: (BuildContext context) {
                         return ShowAddFolderDialog(
                           onAddFolder: (String folderName) {
-                            setState(() {
-                              folderList.add(folderName); // 使用回调函数添加文件夹
-                              selectedFolder= folderName; // 更新所选文件夹
-                            });
+                            _addFolder(context, folderName);
                           },
                         );
                       },
@@ -181,26 +168,26 @@ class _HomePageState extends State<HomePage> {
                     thickness: 3,
                     color: Color.fromARGB(58, 99, 70, 2),
                   ),
-                  for (int i = 0; i < todoItemList.length; i++) // Events
-                    if (selectedFolder == 'All' ||
-                        todoItemList[i].folder == selectedFolder)
+                  for (int i = 0; i < homeVM.todoItemList.length; i++) // Events
+                    if (homeVM.selectedFolder == 'All' ||
+                        homeVM.todoItemList[i].folder == homeVM.selectedFolder)
                       Row(
                         children: [
                           Expanded(
-                            child: buildTableCell(todoItemList[i].name),
+                            child: buildTableCell(homeVM.todoItemList[i].name),
                           ),
                           Expanded(
                             child: buildTableCell(
-                              todoItemList[i].date),
+                              homeVM.todoItemList[i].date),
                           ),
                           Expanded(
-                            child: buildTableCell(todoItemList[i].place),
+                            child: buildTableCell(homeVM.todoItemList[i].place),
                           ),
                           Expanded(
-                            child: buildTableCell(todoItemList[i].note),
+                            child: buildTableCell(homeVM.todoItemList[i].note),
                           ),
                           Expanded(
-                            child: buildTableCell(todoItemList[i].folder),
+                            child: buildTableCell(homeVM.todoItemList[i].folder),
                           ),
                           Container(
                             margin: const EdgeInsets.only(right: 25),
@@ -210,9 +197,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Color.fromARGB(255, 255, 157, 0),
                               ),
                               onPressed: () {
-                                setState(() {
-                                  todoItemList.removeAt(i);
-                                });
+                                _deleteTodoItem(context, i);
                               },
                             ),
                           ),
@@ -228,7 +213,7 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: _upload,
+            onPressed: () => _upload(context),
             child: const Icon(Icons.cloud_upload),
           ),
           const SizedBox(height: 16),
@@ -239,14 +224,11 @@ class _HomePageState extends State<HomePage> {
                 builder: (BuildContext context) {
                   return AddEventPage(
                     onSubmit: (data) {
-                      setState(() {
-                        todoItemList.add(data);
-                        todoItemList.sort((a, b) => a.date.compareTo(b.date));
-                      });
+                      _addTodoItem(context, data);
                       Navigator.of(context).pop();
                     },
-                    folderList: folderList,
-                    onAddFolder: _addFolder,
+                    folderList: homeVM.folderList,
+                    onAddFolder: (folderName) => _addFolder(context, folderName),
                   );
                 },
               );
@@ -256,73 +238,59 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      )
     );
   }
 
-  
-  void _addFolder(String newFolderName) {
+  void _addFolder(BuildContext context, String newFolderName) {
     if (newFolderName.isNotEmpty) {
-      setState(() {
-        folderList.add(newFolderName);
-      });
+      context.read<HomePageViewModel>().addFolder(newFolderName);
     }
   }
 
-  void _renameFolder(String folderName, String newFolderName) {
+  void _renameFolder(BuildContext context, String folderName, String newFolderName) {
     if (folderName.isNotEmpty && newFolderName.isNotEmpty) {
-      setState(() {
-        int index =
-            folderList.indexOf(folderName); // find current folder's index
-        folderList[index] = newFolderName;
-      });
+      context.read<HomePageViewModel>().renameFolder(folderName, newFolderName);
     }
   }
 
-  void _deleteFolder(String folderName) {
-    setState(() {
-      folderList.remove(folderName);
-    });
+  void _deleteFolder(BuildContext context, String folderName) {
+    context.read<HomePageViewModel>().deleteFolder(folderName);
   }
 
-  void _selectFolder(String folderName) {
-    setState(() {
-      selectedFolder = folderName;
-      Navigator.pop(context); // Close the drawer after selecting a folder
-    });
+  void _selectFolder(BuildContext context, String folderName) {
+    context.read<HomePageViewModel>().selectFolder(folderName);
+    Navigator.pop(context); // Close the drawer after selecting a folder
   }
-  
 
-  void _loadData() async {
-    final googleViewModel = context.read<GoogleViewModel>();
+  void _addTodoItem(BuildContext context, TodoItem data) {
+    context.read<HomePageViewModel>().addTodoItem(data);
+  }
+
+  void _deleteTodoItem(BuildContext context, int index) {
+    context.read<HomePageViewModel>().deleteTodoItem(index);
+  }
+
+  void _loadData(GoogleViewModel googleViewModel, HomePageViewModel homePageViewModel) async {
     if (googleViewModel.user != null) {
       final user = await UserRepo.read(googleViewModel.user!.uid);
       if (user != null) {
-        setState(() {
-          folderList = user.folders;
-          todoItemList = user.todoList.map((todoItem) {
-            return TodoItem(
-              name: todoItem.name,
-              date: todoItem.date , 
-              place: todoItem.place,
-              note: todoItem.note ,
-              folder: todoItem.folder ,
-            );
-          }).toList();
-        });
+        homePageViewModel.loadData(user);
       } 
     }
   }
-  Future<void> _upload() async {
+
+
+  void _upload(BuildContext context) async {
     final googleViewModel = context.read<GoogleViewModel>();
     // log in?
     if (googleViewModel.user != null) {
-
-        final user = User(
-          uid: googleViewModel.user!.uid,
-          todoList: todoItemList,
-          folders: folderList,
-        );
-        await UserRepo.update(user);
+      final user = User(
+        uid: googleViewModel.user!.uid,
+        todoList: context.read<HomePageViewModel>().todoItemList,
+        folders: context.read<HomePageViewModel>().folderList,
+      );
+      await UserRepo.update(user);
     } 
   }
 }
