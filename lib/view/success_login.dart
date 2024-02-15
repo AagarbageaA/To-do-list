@@ -37,16 +37,23 @@ class LoginSuccessPage extends StatelessWidget {
                       style: 
                         const TextStyle(
                           color: Color.fromRGBO(255, 255, 255, 1),
-                          fontSize: 12,
+                          fontSize: 14,
                           ),
                         
                     ),
                     CustomElevatedButton(
-                      hei:100,
+                      hei:120,
                       wid:40,
                       textSize:15,
                       onPressed: () => goodleVM.signOut(),
-                      child: const Text("Sign out"),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.login), 
+                          SizedBox(width: 10), 
+                          Text("Log out",style:TextStyle(fontWeight: FontWeight.bold)),
+                        ],
+                      ),
                     ),
                     const SizedBox(width: 20),
                   ]
@@ -84,6 +91,7 @@ class LoginSuccessPage extends StatelessWidget {
                 title: Text(folderName),
                 onTap: () {
                   homeVM.selectFolder(folderName);
+                  Navigator.of(context).pop();
                 },
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -216,9 +224,17 @@ class LoginSuccessPage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Image.asset(
+                    'images/shiba_icon.png', 
+                    fit: BoxFit.cover, 
+                    width: 200, 
+                    height: 200, 
+                  ),
+
+
           FloatingActionButton(
            backgroundColor:const Color.fromARGB(255, 255, 255, 255),
             splashColor:const Color.fromARGB(255, 7, 34, 45),
@@ -249,7 +265,6 @@ class LoginSuccessPage extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       )
     );
   }

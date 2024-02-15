@@ -10,9 +10,11 @@ class HomePageViewModel extends ChangeNotifier {
   String selectedFolder = 'All';
 
   void addFolder(String newFolderName,BuildContext context) {
-    folderList.add(newFolderName);
-    notifyListeners();
-    upload(context);
+    if(!folderList.contains(newFolderName)) {
+      folderList.add(newFolderName);
+      notifyListeners();
+      upload(context);
+    }
   }
 
   void renameFolder(String folderName, String newFolderName,BuildContext context) {

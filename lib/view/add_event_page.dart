@@ -24,12 +24,7 @@ class AddEventPage extends StatelessWidget {
     TextEditingController dateController = TextEditingController();
     TextEditingController placeController = TextEditingController();
     TextEditingController noteController = TextEditingController();
-    TextEditingController selectedFolderController =
-        TextEditingController(); // 新增 selectedFolderController
-
-    if (folderList.isNotEmpty) {
-      selectedFolderController.text = folderList[0];
-    }
+    ValueNotifier<String> selectedFolderController = ValueNotifier<String>(folderList.isNotEmpty ? folderList[0] : '');
 
     return Consumer2<GoogleViewModel,HomePageViewModel>(
       builder: (context, goodleVM, homeVM, child)=>
@@ -97,39 +92,44 @@ class AddEventPage extends StatelessWidget {
               style: TextStyle(fontSize: 10),
             ),
             if (folderList.isNotEmpty)
-              DropdownButton<String>(
-                value: selectedFolderController.text,
-                onChanged: (String? value) {
-                  if (value == 'Add Folder') {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return ShowAddFolderDialog(
-                          onAddFolder: (String folderName) {
-                            onAddFolder(folderName);
-                            selectedFolderController.text = folderName;
+              ValueListenableBuilder<String>(
+                valueListenable: selectedFolderController,
+                builder: (context, value, child) {
+                  return DropdownButton<String>(
+                    value: value,
+                    onChanged: (String? newValue) {
+                      if (newValue == 'Add Folder') {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ShowAddFolderDialog(
+                              onAddFolder: (String folderName) {
+                                onAddFolder(folderName);
+                                selectedFolderController.value = folderName;
+                              },
+                            );
                           },
                         );
-                      },
-                    );
-                  } else if (value != null) {
-                    selectedFolderController.text = value;
-                  }
-                },
-                items: [
-                  ...folderList.map<DropdownMenuItem<String>>(
-                    (String folder) {
-                      return DropdownMenuItem<String>(
-                        value: folder,
-                        child: Text(folder),
-                      );
+                      } else if (newValue != null) {
+                        selectedFolderController.value = newValue;
+                      }
                     },
-                  ),
-                  const DropdownMenuItem<String>(
-                    value: 'Add Folder',
-                    child: Text('Add Folder'),
-                  ),
-                ],
+                    items: [
+                      ...folderList.map<DropdownMenuItem<String>>(
+                        (String folder) {
+                          return DropdownMenuItem<String>(
+                            value: folder,
+                            child: Text(folder),
+                          );
+                        },
+                      ),
+                      const DropdownMenuItem<String>(
+                        value: 'Add Folder',
+                        child: Text('Add Folder'),
+                      ),
+                    ],
+                  );
+                },
               )
             else
               CustomElevatedButton(
@@ -143,7 +143,7 @@ class AddEventPage extends StatelessWidget {
                       return ShowAddFolderDialog(
                         onAddFolder: (String folderName) {
                           onAddFolder(folderName);
-                          selectedFolderController.text = folderName;
+                          selectedFolderController.value = folderName;
                         },
                       );
                     },
@@ -179,7 +179,7 @@ class AddEventPage extends StatelessWidget {
                       date: date,
                       place: place,
                       note: note,
-                      folder: selectedFolderController.text,
+                      folder: selectedFolderController.value,
                     );
 
                     onSubmit(tempTodoItem);

@@ -24,7 +24,7 @@ class NotLoginPage extends StatelessWidget {
               centerTitle:true,
               backgroundColor:const Color.fromARGB(225, 7, 34, 45)
             ),
-            
+
             body:
               Stack(
                 children: [
@@ -53,7 +53,7 @@ class NotLoginPage extends StatelessWidget {
                         children: [
                           Icon(Icons.login), 
                           SizedBox(width: 10), 
-                          Text("Log in"),
+                          Text("Log in",style:TextStyle(fontWeight: FontWeight.bold)),
                         ],
                       ),
                     ),
