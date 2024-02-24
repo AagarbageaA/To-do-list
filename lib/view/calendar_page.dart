@@ -45,7 +45,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 toolbarHeight: 80,
                 title: Row(children: [
                   Image.asset(
-                    'images/appbar_shino.png',
+                    'images/appbar_shiba.png',
                     width: 100, // 調整圖片的大小
                     height: 100,
                   ),
