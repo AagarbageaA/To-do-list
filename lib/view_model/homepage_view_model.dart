@@ -9,22 +9,23 @@ class HomePageViewModel extends ChangeNotifier {
   List<String> folderList = [];
   String selectedFolder = 'All';
 
-  void addFolder(String newFolderName,BuildContext context) {
-    if(!folderList.contains(newFolderName)) {
+  void addFolder(String newFolderName, BuildContext context) {
+    if (!folderList.contains(newFolderName)) {
       folderList.add(newFolderName);
       notifyListeners();
       upload(context);
     }
   }
 
-  void renameFolder(String folderName, String newFolderName,BuildContext context) {
+  void renameFolder(
+      String folderName, String newFolderName, BuildContext context) {
     int index = folderList.indexOf(folderName); // find current folder's index
     folderList[index] = newFolderName;
     notifyListeners();
     upload(context);
   }
 
-  void deleteFolder(String folderName,BuildContext context) {
+  void deleteFolder(String folderName, BuildContext context) {
     folderList.remove(folderName);
     notifyListeners();
     upload(context);
@@ -35,20 +36,20 @@ class HomePageViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addTodoItem(TodoItem item,BuildContext context) {
+  void addTodoItem(TodoItem item, BuildContext context) {
     todoItemList.add(item);
     todoItemList.sort((a, b) => a.date.compareTo(b.date));
     notifyListeners();
     upload(context);
   }
 
-  void deleteTodoItem(int index,BuildContext context) {
+  void deleteTodoItem(int index, BuildContext context) {
     todoItemList.removeAt(index);
     notifyListeners();
     upload(context);
   }
 
-  void loadData(BuildContext context) async{
+  void loadData(BuildContext context) async {
     final user = await UserRepo.read(context.read<GoogleViewModel>().user!.uid);
     folderList = user!.folders;
     todoItemList = user.todoList.map((todoItem) {
@@ -63,12 +64,12 @@ class HomePageViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void upload(BuildContext context){
+  void upload(BuildContext context) {
     final user = User(
-        uid: context.read<GoogleViewModel>().user!.uid,
-        todoList: todoItemList,
-        folders: folderList,
-      );
+      uid: context.read<GoogleViewModel>().user!.uid,
+      todoList: todoItemList,
+      folders: folderList,
+    );
     UserRepo.update(user);
   }
 }

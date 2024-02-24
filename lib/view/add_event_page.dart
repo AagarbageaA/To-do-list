@@ -24,18 +24,18 @@ class AddEventPage extends StatelessWidget {
     TextEditingController dateController = TextEditingController();
     TextEditingController placeController = TextEditingController();
     TextEditingController noteController = TextEditingController();
-    ValueNotifier<String> selectedFolderController = ValueNotifier<String>(folderList.isNotEmpty ? folderList[0] : '');
+    ValueNotifier<String> selectedFolderController =
+        ValueNotifier<String>(folderList.isNotEmpty ? folderList[0] : '');
 
-    return Consumer2<GoogleViewModel,HomePageViewModel>(
-      builder: (context, goodleVM, homeVM, child)=>
-      Container(
+    return Consumer2<GoogleViewModel, HomePageViewModel>(
+      builder: (context, goodleVM, homeVM, child) => Container(
         padding: const EdgeInsets.all(8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Text(
               'Name',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 10),
             ),
             TextField(
               controller: nameController,
@@ -56,7 +56,8 @@ class AddEventPage extends StatelessWidget {
                 );
                 if (selectedDate != null) {
                   // Format the selected date to "yyyy-MM-dd" format
-                  String formattedDate = "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
+                  String formattedDate =
+                      "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
                   dateController.text = formattedDate;
                 }
               },
@@ -133,9 +134,9 @@ class AddEventPage extends StatelessWidget {
               )
             else
               CustomElevatedButton(
-                textSize:16,
-                wid:15,
-                hei:10,
+                textSize: 16,
+                wid: 15,
+                hei: 10,
                 onPressed: () {
                   showDialog(
                     context: context,
@@ -156,18 +157,18 @@ class AddEventPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomElevatedButton(
-                textSize:16,
-                wid:15,
-                hei:100,
+                  textSize: 16,
+                  wid: 10,
+                  hei: 100,
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                   child: const Text('Cancel'),
                 ),
                 CustomElevatedButton(
-                textSize:16,
-                wid:30,
-                hei:100,
+                  textSize: 16,
+                  wid: 10,
+                  hei: 100,
                   onPressed: () {
                     String name = nameController.text;
                     String date = dateController.text;

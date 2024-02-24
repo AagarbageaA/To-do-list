@@ -20,20 +20,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-        ChangeNotifierProvider(create: (_) => GoogleViewModel()),
-        ChangeNotifierProvider(create: (_) => HomePageViewModel()),
-      ],child: MaterialApp(
-      title: 'To-do List',
-      theme: ThemeData(
-        primarySwatch: createCustomMaterialColor(
-            const Color.fromRGBO(229, 146, 74, 0.678)),
-      ),
-      debugShowCheckedModeBanner: false,
-      home: const HomePage(),
-      )
-    );
-    
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => GoogleViewModel()),
+          ChangeNotifierProvider(create: (_) => HomePageViewModel()),
+        ],
+        child: MaterialApp(
+          title: 'To-do List',
+          theme: ThemeData(
+            primarySwatch: createCustomMaterialColor(
+                const Color.fromRGBO(229, 146, 74, 0.678)),
+          ),
+          debugShowCheckedModeBanner: false,
+          home: const HomePage(),
+        ));
   }
 
   MaterialColor createCustomMaterialColor(Color color) {
