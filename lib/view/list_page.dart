@@ -84,6 +84,7 @@ class ListPage extends StatelessWidget {
                       title: const Text('All'),
                       onTap: () {
                         homeVM.selectFolder('All');
+                        Navigator.of(context).pop();
                       },
                     ),
                     for (String folderName
@@ -234,6 +235,13 @@ class ListPage extends StatelessWidget {
                                   ),
                                 ],
                               ),
+                          Container(
+                            height: 9000,
+                            width: 5000,
+                            color: Color.fromARGB(0, 255, 255, 255).withOpacity(
+                                1), // 調整透明度的值在這裡，0.0 表示完全透明，1.0 表示完全不透明
+                            child: SizedBox(),
+                          ),
                         ],
                       ),
                     ),
@@ -243,41 +251,55 @@ class ListPage extends StatelessWidget {
               floatingActionButton: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset(
-                    'images/shiba_icon.png',
-                    fit: BoxFit.cover,
-                    width: 200,
-                    height: 200,
-                  ),
-                  FloatingActionButton(
-                    backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-                    splashColor: const Color.fromARGB(255, 7, 34, 45),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      side: const BorderSide(
-                        color: Color.fromARGB(139, 7, 34, 45),
-                        width: 4,
-                        strokeAlign: -1,
-                      ),
+                  ColorFiltered(
+                    colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(
+                          0.6), // 調整透明度的值在這裡，0.0 表示完全透明，1.0 表示完全不透明
+                      BlendMode.dstIn, // 調整混合模式以達到您想要的效果
                     ),
-                    onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AddEventPage(
-                            onSubmit: (data) {
-                              homeVM.addTodoItem(data, context);
-                              Navigator.of(context).pop();
-                            },
-                            folderList: homeVM.folderList,
-                            onAddFolder: (folderName) =>
-                                homeVM.addFolder(folderName, context),
-                          );
-                        },
-                      );
-                    },
-                    child: const Icon(Icons.add,
-                        color: Color.fromARGB(255, 7, 34, 45)),
+                    child: Image.asset(
+                      'images/shiba_icon.png',
+                      fit: BoxFit.cover,
+                      width: 200,
+                      height: 200,
+                    ),
+                  ),
+                  ColorFiltered(
+                    colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(
+                          0.5), // 調整透明度的值在這裡，0.0 表示完全透明，1.0 表示完全不透明
+                      BlendMode.dstIn, // 調整混合模式以達到您想要的效果
+                    ),
+                    child: FloatingActionButton(
+                      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                      splashColor: const Color.fromARGB(255, 7, 34, 45),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: const BorderSide(
+                          color: Color.fromARGB(139, 7, 34, 45),
+                          width: 4,
+                          strokeAlign: -1,
+                        ),
+                      ),
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AddEventPage(
+                              onSubmit: (data) {
+                                homeVM.addTodoItem(data, context);
+                                Navigator.of(context).pop();
+                              },
+                              folderList: homeVM.folderList,
+                              onAddFolder: (folderName) =>
+                                  homeVM.addFolder(folderName, context),
+                            );
+                          },
+                        );
+                      },
+                      child: const Icon(Icons.add,
+                          color: Color.fromARGB(255, 7, 34, 45)),
+                    ),
                   ),
                 ],
               ),

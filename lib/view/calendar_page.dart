@@ -93,7 +93,7 @@ class _CalendarPageState extends State<CalendarPage> {
                     ]),
                     child: CalendarWeek(
                       controller: _controller,
-                      height: 110,
+                      height: 130,
                       dayOfWeekStyle: const TextStyle(
                           color: Color.fromARGB(240, 7, 25, 60)),
                       dateStyle: const TextStyle(
@@ -109,25 +109,51 @@ class _CalendarPageState extends State<CalendarPage> {
                       maxDate: DateTime.now().add(
                         const Duration(days: 365),
                       ),
-                      onDatePressed: (DateTime datetime) {
-                        // Do something
-                        setState(() {});
-                      },
-                      onDateLongPressed: (DateTime datetime) {
-                        // Do something
-                      },
                       onWeekChanged: () {
                         setState(() {});
                       },
                       monthViewBuilder: (DateTime time) => Align(
                         alignment: FractionalOffset.center,
-                        child: Text(
-                          DateFormat.yMMMM().format(time),
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 7, 35, 58),
-                              fontWeight: FontWeight.w600),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // 日曆圖示
+                            IconButton(
+                              icon: const Icon(Icons.calendar_month,
+                                  color: Color.fromARGB(179, 14, 57, 93)),
+                              color:
+                                  const Color.fromARGB(255, 7, 35, 58), // 圖示顏色
+                              onPressed: () async {
+                                final DateTime? pickedDate =
+                                    await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(2101),
+                                );
+
+                                // 如果選擇了日期，則執行滾動至當周的操作
+                                if (pickedDate != null) {
+                                  // 將視圖滾動到選擇的日期所在的周
+                                  _controller.jumpToDate(pickedDate);
+
+                                  // 重新繪製視圖
+                                  setState(() {});
+                                }
+                              },
+                            ),
+                            // 顯示月份的文字
+                            Text(
+                              DateFormat.yMMMM()
+                                  .format(time), // 使用日期格式化來顯示時間的月份
+                              overflow: TextOverflow.ellipsis, // 文字過長時的處理方式
+                              textAlign: TextAlign.center, // 文字對齊方式
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 7, 35, 58), // 文字顏色
+                                fontWeight: FontWeight.w600, // 文字粗細
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       decorations: [
@@ -196,25 +222,6 @@ class _CalendarPageState extends State<CalendarPage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   FloatingActionButton(
-                    heroTag: "btn2",
-                    backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-                    splashColor: const Color.fromARGB(255, 7, 34, 45),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      side: const BorderSide(
-                        color: Color.fromARGB(139, 7, 34, 45),
-                        width: 4,
-                        // strokeAlign: -1, // Not needed
-                      ),
-                    ),
-                    onPressed: () {
-                      _controller.jumpToDate(DateTime.now());
-                      setState(() {});
-                    },
-                    child: const Icon(Icons.today),
-                  ),
-                  const SizedBox(height: 16),
-                  FloatingActionButton(
                     heroTag: "btn1",
                     backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                     splashColor: const Color.fromARGB(255, 7, 34, 45),
@@ -244,6 +251,25 @@ class _CalendarPageState extends State<CalendarPage> {
                     },
                     child: const Icon(Icons.add,
                         color: Color.fromARGB(255, 7, 34, 45)),
+                  ),
+                  const SizedBox(height: 16),
+                  FloatingActionButton(
+                    heroTag: "btn2",
+                    backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                    splashColor: const Color.fromARGB(255, 7, 34, 45),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: const BorderSide(
+                        color: Color.fromARGB(139, 7, 34, 45),
+                        width: 4,
+                        // strokeAlign: -1, // Not needed
+                      ),
+                    ),
+                    onPressed: () {
+                      _controller.jumpToDate(DateTime.now());
+                      setState(() {});
+                    },
+                    child: const Icon(Icons.today),
                   ),
                 ],
               ),
