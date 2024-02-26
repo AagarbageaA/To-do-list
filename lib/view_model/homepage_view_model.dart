@@ -49,17 +49,23 @@ class HomePageViewModel extends ChangeNotifier {
     upload(context);
   }
 
+  void changeCheckState(int index, BuildContext context) {
+    todoItemList[index].ischecked = !todoItemList[index].ischecked;
+    notifyListeners();
+    upload(context);
+  }
+
   void loadData(BuildContext context) async {
     final user = await UserRepo.read(context.read<GoogleViewModel>().user!.uid);
     folderList = user!.folders;
     todoItemList = user.todoList.map((todoItem) {
       return TodoItem(
-        name: todoItem.name,
-        date: todoItem.date,
-        place: todoItem.place,
-        note: todoItem.note,
-        folder: todoItem.folder,
-      );
+          name: todoItem.name,
+          date: todoItem.date,
+          place: todoItem.place,
+          note: todoItem.note,
+          folder: todoItem.folder,
+          ischecked: todoItem.ischecked);
     }).toList();
     notifyListeners();
   }

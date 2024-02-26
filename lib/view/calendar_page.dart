@@ -286,8 +286,20 @@ class _CalendarPageState extends State<CalendarPage> {
               DateTime.parse(todo.date).weekday ==
                   day) // Filter todo items for Thursday
           .map((todo) => ListTile(
-              title: Text("- Name: ${todo.name}"),
-              subtitle: Text("   Note: ${todo.note}")
+              title: Text(
+                  "- Name: ${todo.name}",
+                  style: TextStyle(
+                    decoration: todo.ischecked
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none,
+                  )),
+              subtitle: Text(
+                  "   Note: ${todo.note}",
+                  style: TextStyle(
+                    decoration: todo.ischecked
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none,
+                  ))
               // Other properties of todo item
               ))
           .toList(),

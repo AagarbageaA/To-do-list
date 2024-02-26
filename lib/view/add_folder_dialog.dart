@@ -34,8 +34,8 @@ class ShowAddFolderDialog extends StatelessWidget {
           onPressed: () {
             String folderName = folderNameController.text;
             if (folderName.isNotEmpty) {
-              onAddFolder(folderName); 
-              Navigator.pop(context); 
+              onAddFolder(folderName);
+              Navigator.pop(context);
             } else {
               showDialog(
                 context: context,

@@ -168,7 +168,7 @@ class ListPage extends StatelessWidget {
                           Row(
                             // Column title row
                             children: [
-                              const SizedBox(width: 20),
+                              const SizedBox(width: 50),
                               Expanded(
                                 child: buildTableCell('Name'),
                               ),
@@ -185,7 +185,7 @@ class ListPage extends StatelessWidget {
                                 child: buildTableCell('Folder'),
                               ),
                               const SizedBox(
-                                  width: 65), // Save place for deletion button
+                                  width: 75), // Save place for deletion button
                             ],
                           ),
                           const Divider(
@@ -200,26 +200,69 @@ class ListPage extends StatelessWidget {
                                     homeVM.selectedFolder)
                               Row(
                                 children: [
-                                  const SizedBox(width: 20),
-                                  Expanded(
-                                    child: buildTableCell(
-                                        homeVM.todoItemList[i].name),
+                                  Container(
+                                    margin: const EdgeInsets.only(right: 25),
+                                    child: Checkbox(
+                                      value: homeVM.todoItemList[i].ischecked,
+                                      onChanged: (bool? value) {
+                                        homeVM.changeCheckState(i, context);
+                                      },
+                                    ),
                                   ),
                                   Expanded(
-                                    child: buildTableCell(
-                                        homeVM.todoItemList[i].date),
+                                    child: Text(
+                                      homeVM.todoItemList[i].name,
+                                      style: TextStyle(
+                                        decoration:
+                                            homeVM.todoItemList[i].ischecked
+                                                ? TextDecoration.lineThrough
+                                                : TextDecoration.none,
+                                      ),
+                                    ),
                                   ),
                                   Expanded(
-                                    child: buildTableCell(
-                                        homeVM.todoItemList[i].place),
+                                    child: Text(
+                                      homeVM.todoItemList[i].date,
+                                      style: TextStyle(
+                                        decoration:
+                                            homeVM.todoItemList[i].ischecked
+                                                ? TextDecoration.lineThrough
+                                                : TextDecoration.none,
+                                      ),
+                                    ),
                                   ),
                                   Expanded(
-                                    child: buildTableCell(
-                                        homeVM.todoItemList[i].note),
+                                    child: Text(
+                                      homeVM.todoItemList[i].place,
+                                      style: TextStyle(
+                                        decoration:
+                                            homeVM.todoItemList[i].ischecked
+                                                ? TextDecoration.lineThrough
+                                                : TextDecoration.none,
+                                      ),
+                                    ),
                                   ),
                                   Expanded(
-                                    child: buildTableCell(
-                                        homeVM.todoItemList[i].folder),
+                                    child: Text(
+                                      homeVM.todoItemList[i].note,
+                                      style: TextStyle(
+                                        decoration:
+                                            homeVM.todoItemList[i].ischecked
+                                                ? TextDecoration.lineThrough
+                                                : TextDecoration.none,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      homeVM.todoItemList[i].folder,
+                                      style: TextStyle(
+                                        decoration:
+                                            homeVM.todoItemList[i].ischecked
+                                                ? TextDecoration.lineThrough
+                                                : TextDecoration.none,
+                                      ),
+                                    ),
                                   ),
                                   Container(
                                     margin: const EdgeInsets.only(right: 25),
@@ -236,11 +279,11 @@ class ListPage extends StatelessWidget {
                                 ],
                               ),
                           Container(
-                            height: 9000,
+                            height: 200,
                             width: 5000,
-                            color: Color.fromARGB(0, 255, 255, 255).withOpacity(
-                                1), // 調整透明度的值在這裡，0.0 表示完全透明，1.0 表示完全不透明
-                            child: SizedBox(),
+                            color: const Color.fromARGB(255, 255, 255, 255)
+                                .withOpacity(1),
+                            child: const SizedBox(),
                           ),
                         ],
                       ),

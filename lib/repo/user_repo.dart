@@ -50,6 +50,7 @@ class UserRepo {
           place: "Home",
           note: "It's 6:51 a.m. right now",
           folder: "Folder 1",
+          ischecked: true,
         ),
       ],
       folders: ["Folder 1"],

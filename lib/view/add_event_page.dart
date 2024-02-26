@@ -181,6 +181,7 @@ class AddEventPage extends StatelessWidget {
                       place: place,
                       note: note,
                       folder: selectedFolderController.value,
+                      ischecked: false,
                     );
 
                     onSubmit(tempTodoItem);
