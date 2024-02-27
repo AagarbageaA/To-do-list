@@ -73,7 +73,7 @@ class ListPage extends StatelessWidget {
                             Color.fromARGB(255, 7, 34, 45), // Background color
                         image: DecorationImage(
                           image: AssetImage(
-                              'images/shiba_wallpaper.jpg'), // 使用AssetImage提供图片
+                              'shiba_wallpaper.jpg'), // 使用AssetImage提供图片
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -301,7 +301,7 @@ class ListPage extends StatelessWidget {
                       BlendMode.dstIn, // 調整混合模式以達到您想要的效果
                     ),
                     child: Image.asset(
-                      'images/shiba_icon.png',
+                      'shiba_icon.png',
                       fit: BoxFit.cover,
                       width: 200,
                       height: 200,
