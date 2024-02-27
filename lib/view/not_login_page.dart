@@ -24,7 +24,7 @@ class NotLoginPage extends StatelessWidget {
               children: [
                 //background picture
                 Image.asset(
-                  'shiba_wallpaper.jpg',
+                  'lib/picture/shiba_wallpaper.jpg',
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height: double.infinity,
