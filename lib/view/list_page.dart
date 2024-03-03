@@ -195,9 +195,10 @@ class ListPage extends StatelessWidget {
                           for (int i = 0;
                               i < homeVM.todoItemList.length;
                               i++) // Events
-                            if (homeVM.selectedFolder == 'All' ||
-                                homeVM.todoItemList[i].folder ==
-                                    homeVM.selectedFolder)
+                            if ((homeVM.selectedFolder == 'All' ||
+                                    homeVM.todoItemList[i].folder ==
+                                        homeVM.selectedFolder) &&
+                                homeVM.todoItemList[i].ischecked == false)
                               Row(
                                 children: [
                                   Container(
@@ -212,56 +213,98 @@ class ListPage extends StatelessWidget {
                                   Expanded(
                                     child: Text(
                                       homeVM.todoItemList[i].name,
-                                      style: TextStyle(
-                                        decoration:
-                                            homeVM.todoItemList[i].ischecked
-                                                ? TextDecoration.lineThrough
-                                                : TextDecoration.none,
-                                      ),
                                     ),
                                   ),
                                   Expanded(
                                     child: Text(
                                       homeVM.todoItemList[i].date,
-                                      style: TextStyle(
-                                        decoration:
-                                            homeVM.todoItemList[i].ischecked
-                                                ? TextDecoration.lineThrough
-                                                : TextDecoration.none,
-                                      ),
                                     ),
                                   ),
                                   Expanded(
                                     child: Text(
                                       homeVM.todoItemList[i].place,
-                                      style: TextStyle(
-                                        decoration:
-                                            homeVM.todoItemList[i].ischecked
-                                                ? TextDecoration.lineThrough
-                                                : TextDecoration.none,
-                                      ),
                                     ),
                                   ),
                                   Expanded(
                                     child: Text(
                                       homeVM.todoItemList[i].note,
-                                      style: TextStyle(
-                                        decoration:
-                                            homeVM.todoItemList[i].ischecked
-                                                ? TextDecoration.lineThrough
-                                                : TextDecoration.none,
-                                      ),
                                     ),
                                   ),
                                   Expanded(
                                     child: Text(
                                       homeVM.todoItemList[i].folder,
-                                      style: TextStyle(
-                                        decoration:
-                                            homeVM.todoItemList[i].ischecked
-                                                ? TextDecoration.lineThrough
-                                                : TextDecoration.none,
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(right: 25),
+                                    child: IconButton(
+                                      icon: const Icon(
+                                        Icons.delete,
+                                        color: Color.fromARGB(182, 7, 34, 45),
                                       ),
+                                      onPressed: () {
+                                        homeVM.deleteTodoItem(i, context);
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                          for (int i = 0;
+                              i < homeVM.todoItemList.length;
+                              i++) // Events
+                            if ((homeVM.selectedFolder == 'All' ||
+                                    homeVM.todoItemList[i].folder ==
+                                        homeVM.selectedFolder) &&
+                                homeVM.todoItemList[i].ischecked == true)
+                              Row(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(right: 25),
+                                    child: Checkbox(
+                                      value: homeVM.todoItemList[i].ischecked,
+                                      onChanged: (bool? value) {
+                                        homeVM.changeCheckState(i, context);
+                                      },
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      homeVM.todoItemList[i].name,
+                                      style: const TextStyle(
+                                          decoration:
+                                              TextDecoration.lineThrough),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      homeVM.todoItemList[i].date,
+                                      style: const TextStyle(
+                                          decoration:
+                                              TextDecoration.lineThrough),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      homeVM.todoItemList[i].place,
+                                      style: const TextStyle(
+                                          decoration:
+                                              TextDecoration.lineThrough),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      homeVM.todoItemList[i].note,
+                                      style: const TextStyle(
+                                          decoration:
+                                              TextDecoration.lineThrough),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      homeVM.todoItemList[i].folder,
+                                      style: const TextStyle(
+                                          decoration:
+                                              TextDecoration.lineThrough),
                                     ),
                                   ),
                                   Container(
