@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_template/view_model/google.dart';
-import 'package:flutter_application_template/view_model/homepage_view_model.dart';
+import 'package:flutter_application_template/view_model/data_view_model.dart';
 import 'package:flutter_application_template/widget/elevated_button.dart';
 import 'package:flutter_application_template/widget/toggle.dart';
 import 'package:flutter_calendar_week/flutter_calendar_week.dart';
@@ -23,13 +23,13 @@ class _CalendarPageState extends State<MobileCalendarPage> {
   void initState() {
     super.initState();
     // Perform initial setState to ensure events are displayed
-    context.read<HomePageViewModel>().loadData(context);
+    context.read<DataViewModel>().loadData(context);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomePageViewModel>(
+    return Consumer<DataViewModel>(
         builder: (context, homeVM, child) => Scaffold(
               appBar: AppBar(
                 automaticallyImplyLeading: false, // 隱藏自動添加的返回按鈕
@@ -163,7 +163,7 @@ class _CalendarPageState extends State<MobileCalendarPage> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
                     children: context
-                        .watch<HomePageViewModel>()
+                        .watch<DataViewModel>()
                         .todoItemList
                         .where((todo) =>
                             DateTime.parse(todo.date).year ==

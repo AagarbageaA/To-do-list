@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_template/model/user.dart';
 import 'package:flutter_application_template/view/add_folder_dialog.dart';
 import 'package:flutter_application_template/view_model/google.dart';
-import 'package:flutter_application_template/view_model/homepage_view_model.dart';
+import 'package:flutter_application_template/view_model/data_view_model.dart';
 import 'package:flutter_application_template/widget/elevated_button.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +27,7 @@ class AddEventPage extends StatelessWidget {
     ValueNotifier<String> selectedFolderController =
         ValueNotifier<String>(folderList.isNotEmpty ? folderList[0] : '');
 
-    return Consumer2<GoogleViewModel, HomePageViewModel>(
+    return Consumer2<GoogleViewModel, DataViewModel>(
       builder: (context, goodleVM, homeVM, child) => Container(
         padding: const EdgeInsets.all(8),
         child: Column(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_template/view/delete_folder_dialog.dart';
 import 'package:flutter_application_template/view_model/google.dart';
-import 'package:flutter_application_template/view_model/homepage_view_model.dart';
+import 'package:flutter_application_template/view_model/data_view_model.dart';
 import 'package:flutter_application_template/widget/cell.dart';
 import 'package:flutter_application_template/widget/elevated_button.dart';
 import 'package:flutter_application_template/widget/toggle.dart';
@@ -12,7 +12,7 @@ class MobileListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<GoogleViewModel, HomePageViewModel>(
+    return Consumer2<GoogleViewModel, DataViewModel>(
         builder: (context, goodleVM, homeVM, child) => Scaffold(
               appBar: AppBar(
                 iconTheme: const IconThemeData(

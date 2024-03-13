@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_template/view_model/google.dart';
-import 'package:flutter_application_template/view_model/homepage_view_model.dart';
+import 'package:flutter_application_template/view_model/data_view_model.dart';
 import 'package:flutter_application_template/widget/elevated_button.dart';
 import 'package:provider/provider.dart';
 
@@ -9,7 +9,7 @@ class NotLoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<GoogleViewModel, HomePageViewModel>(
+    return Consumer2<GoogleViewModel, DataViewModel>(
         builder: (context, goodleVM, homeVM, child) => Scaffold(
             appBar: AppBar(
                 title: const Text('To-do List '),

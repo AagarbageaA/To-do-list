@@ -4,7 +4,7 @@ import 'package:flutter_application_template/repo/user_repo.dart';
 import 'package:flutter_application_template/view_model/google.dart';
 import 'package:provider/provider.dart';
 
-class HomePageViewModel extends ChangeNotifier {
+class DataViewModel extends ChangeNotifier {
   List<TodoItem> todoItemList = [];
   List<String> folderList = [];
   String selectedFolder = 'All';

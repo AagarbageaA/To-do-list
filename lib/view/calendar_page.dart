@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_template/model/user.dart';
 import 'package:flutter_application_template/view/add_event_page.dart';
 import 'package:flutter_application_template/view_model/google.dart';
-import 'package:flutter_application_template/view_model/homepage_view_model.dart';
+import 'package:flutter_application_template/view_model/data_view_model.dart';
 import 'package:flutter_application_template/widget/elevated_button.dart';
 import 'package:flutter_application_template/widget/toggle.dart';
 import 'package:flutter_calendar_week/flutter_calendar_week.dart';
@@ -25,13 +25,13 @@ class _CalendarPageState extends State<CalendarPage> {
   void initState() {
     super.initState();
     // Perform initial setState to ensure events are displayed
-    context.read<HomePageViewModel>().loadData(context);
+    context.read<DataViewModel>().loadData(context);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomePageViewModel>(
+    return Consumer<DataViewModel>(
         builder: (context, homeVM, child) => Scaffold(
               appBar: AppBar(
                 automaticallyImplyLeading: false, // 隱藏自動添加的返回按鈕
@@ -243,7 +243,7 @@ class _CalendarPageState extends State<CalendarPage> {
                             },
                             folderList: homeVM.folderList,
                             onAddFolder: (folderName) => context
-                                .read<HomePageViewModel>()
+                                .read<DataViewModel>()
                                 .addFolder(folderName, context),
                           );
                         },
@@ -279,7 +279,7 @@ class _CalendarPageState extends State<CalendarPage> {
   Widget calendarBlock(int day) {
     return ListView(
       children: context
-          .watch<HomePageViewModel>()
+          .watch<DataViewModel>()
           .todoItemList
           .where((todo) =>
               _isTodoForCurrentWeek(todo) &&

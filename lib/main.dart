@@ -7,7 +7,7 @@ import 'package:flutter_application_template/view/list_page.dart';
 import 'package:flutter_application_template/view/mobile_calendar_page.dart';
 import 'package:flutter_application_template/view/mobile_list_page.dart';
 import 'package:flutter_application_template/view_model/google.dart';
-import 'package:flutter_application_template/view_model/homepage_view_model.dart';
+import 'package:flutter_application_template/view_model/data_view_model.dart';
 import 'package:flutter_application_template/view_model/platform_view_model.dart';
 import 'package:provider/provider.dart';
 import 'view/home_page.dart';
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => GoogleViewModel()),
-          ChangeNotifierProvider(create: (_) => HomePageViewModel()),
+          ChangeNotifierProvider(create: (_) => DataViewModel()),
           Provider(create: (_) => PlatformViewModel()),
         ],
         child: MaterialApp(

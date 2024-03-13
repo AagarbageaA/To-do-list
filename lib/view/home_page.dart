@@ -5,7 +5,7 @@ import 'package:flutter_application_template/view/mobile_list_page.dart';
 import 'package:flutter_application_template/view/not_login_page.dart';
 import 'package:flutter_application_template/view/list_page.dart';
 import 'package:flutter_application_template/view_model/google.dart';
-import 'package:flutter_application_template/view_model/homepage_view_model.dart';
+import 'package:flutter_application_template/view_model/data_view_model.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -17,14 +17,14 @@ class HomePage extends StatelessWidget {
       if (context.watch<GoogleViewModel>().user == null) {
         return const NotLoginPage();
       } else {
-        context.read<HomePageViewModel>().loadData(context);
+        context.read<DataViewModel>().loadData(context);
         return const ListPage();
       }
     } else {
       if (context.watch<GoogleViewModel>().user == null) {
         return const MobileNotLoginPage();
       } else {
-        context.read<HomePageViewModel>().loadData(context);
+        context.read<DataViewModel>().loadData(context);
         return const MobileListPage();
       }
     }
