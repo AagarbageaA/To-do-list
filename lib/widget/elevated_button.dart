@@ -20,19 +20,17 @@ class CustomElevatedButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.all(16), 
-        textStyle: TextStyle(fontSize: textSize), 
+        padding: const EdgeInsets.all(2),
+        textStyle: TextStyle(fontSize: textSize),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-          side:const BorderSide(
-            color:  Color.fromARGB(138, 7, 34, 45),
-            width:3,
-            )
-        ),
+            borderRadius: BorderRadius.circular(10),
+            side: const BorderSide(
+              color: Color.fromARGB(138, 7, 34, 45),
+              width: 3,
+            )),
         fixedSize: Size(hei, wid),
         alignment: Alignment.center,
         foregroundColor: const Color.fromARGB(255, 7, 34, 45),
-
       ),
       child: child,
     );

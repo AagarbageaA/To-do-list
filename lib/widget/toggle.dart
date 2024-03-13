@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_template/view/calendar_page.dart';
-import 'package:flutter_application_template/view/list_page.dart';
+import 'package:flutter_application_template/enum/platform.dart';
 
 class ToggleButton extends StatefulWidget {
   const ToggleButton({super.key});
@@ -15,6 +14,12 @@ class _MyWidgetState extends State<ToggleButton> {
   @override
   Widget build(BuildContext context) {
     return ToggleButtons(
+        constraints: const BoxConstraints(
+          maxHeight: 40,
+          maxWidth: 60,
+          minHeight: 40,
+          minWidth: 60,
+        ),
         // list of booleans
         isSelected: isSelected,
         // text color of selected toggle
@@ -60,16 +65,18 @@ class _MyWidgetState extends State<ToggleButton> {
               }
             }
           });
-          if (newIndex == 0) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const ListPage()),
-            );
-          } else {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const CalendarPage()),
-            );
+
+          final isListPage = newIndex == 0;
+          final page = isListPage
+              ? (MediaQuery.of(context).size.width >= Platform.computer.minWidth
+                  ? 'list_page_route'
+                  : 'mobile_list_page_route')
+              : (MediaQuery.of(context).size.width >= Platform.computer.minWidth
+                  ? 'calendar_page_route'
+                  : 'mobile_calendar_page_route');
+
+          if (ModalRoute.of(context)?.settings.name != page) {
+            Navigator.of(context).pushReplacementNamed(page);
           }
         });
   }

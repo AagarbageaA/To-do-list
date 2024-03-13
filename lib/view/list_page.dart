@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_template/view/add_event_page.dart';
 import 'package:flutter_application_template/view/add_folder_dialog.dart';
 import 'package:flutter_application_template/view/delete_folder_dialog.dart';
-import 'package:flutter_application_template/view/rename_folder_dialog.dart';
 import 'package:flutter_application_template/view_model/google.dart';
 import 'package:flutter_application_template/view_model/homepage_view_model.dart';
 import 'package:flutter_application_template/widget/cell.dart';
@@ -44,7 +43,9 @@ class ListPage extends StatelessWidget {
                       hei: 120,
                       wid: 40,
                       textSize: 15,
-                      onPressed: () => goodleVM.signOut(),
+                      onPressed: () => goodleVM.signOut().then((_) {
+                        homeVM.loadData(context);
+                      }),
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -98,24 +99,6 @@ class ListPage extends StatelessWidget {
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            IconButton(
-                              // Edit folder name
-                              icon: const Icon(Icons.edit),
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return RenameFolderDialog(
-                                      folderName: folderName,
-                                      onRenameFolder: (folderName,
-                                              newFolderName) =>
-                                          homeVM.renameFolder(folderName,
-                                              newFolderName, context),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
                             IconButton(
                               // Delete folder,
                               icon: const Icon(

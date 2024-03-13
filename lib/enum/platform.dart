@@ -7,7 +7,7 @@ enum Platform {
   tablet(720),
 
   /// 電腦
-  computer(1280);
+  computer(730);
 
   /// 平台裝置的最小寬度
   final double minWidth;

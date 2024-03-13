@@ -2,8 +2,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_template/firebase_options.dart';
+import 'package:flutter_application_template/view/calendar_page.dart';
+import 'package:flutter_application_template/view/list_page.dart';
+import 'package:flutter_application_template/view/mobile_calendar_page.dart';
+import 'package:flutter_application_template/view/mobile_list_page.dart';
 import 'package:flutter_application_template/view_model/google.dart';
 import 'package:flutter_application_template/view_model/homepage_view_model.dart';
+import 'package:flutter_application_template/view_model/platform_view_model.dart';
 import 'package:provider/provider.dart';
 import 'view/home_page.dart';
 
@@ -24,6 +29,7 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (_) => GoogleViewModel()),
           ChangeNotifierProvider(create: (_) => HomePageViewModel()),
+          Provider(create: (_) => PlatformViewModel()),
         ],
         child: MaterialApp(
           title: 'To-do List',
@@ -33,6 +39,13 @@ class MyApp extends StatelessWidget {
           ),
           debugShowCheckedModeBanner: false,
           home: const HomePage(),
+          routes: {
+            'list_page_route': (context) => const ListPage(),
+            'calendar_page_route': (context) => const CalendarPage(),
+            'mobile_list_page_route': (context) => const MobileListPage(),
+            'mobile_calendar_page_route': (context) =>
+                const MobileCalendarPage()
+          },
         ));
   }
 

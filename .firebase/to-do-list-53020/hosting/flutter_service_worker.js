@@ -7,7 +7,7 @@ const RESOURCES = {"assets/AssetManifest.bin": "f062f5e1b0968c382b2519abe0ecf092
 "assets/AssetManifest.bin.json": "11c3ef686d4bee34011d49dd03b62a30",
 "assets/AssetManifest.json": "8aec025d8d342e6827360150b78ceb79",
 "assets/FontManifest.json": "5a32d4310a6f5d9a6b651e75ba0d7372",
-"assets/fonts/MaterialIcons-Regular.otf": "f621d96e1353050ee82fd258b90798a4",
+"assets/fonts/MaterialIcons-Regular.otf": "7b316ea86b52541d775a351a4b0f8dbe",
 "assets/lib/picture/appbar_shiba.png": "cb0dfa80507d7e2b61dddcff6c0c0c52",
 "assets/lib/picture/shiba_icon.png": "0ff87e82e26d3e3eadcee37839ae9464",
 "assets/lib/picture/shiba_wallpaper.jpg": "3a3f43c96291b0544b0d7a1a0c9de321",
@@ -31,10 +31,10 @@ const RESOURCES = {"assets/AssetManifest.bin": "f062f5e1b0968c382b2519abe0ecf092
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
 "icon_198x278.png": "438f0a9259ece53019944cf7f0d55f0b",
-"index.html": "ac35f8fd194da9d5f3d2e21ed3c8ee3f",
-"/": "ac35f8fd194da9d5f3d2e21ed3c8ee3f",
-"main.dart.js": "cf6ee0c1dbd21806cad5a9b6da49347f",
-"manifest.json": "bf725661ff19c052c8bf211589347eb6",
+"index.html": "3c5ea8b364b7a4ba181cb5fa2e882a0e",
+"/": "3c5ea8b364b7a4ba181cb5fa2e882a0e",
+"main.dart.js": "933928f591be429cef17d75b845da225",
+"manifest.json": "b79506064d8d834c6d69e7c9b63ad26d",
 "version.json": "2f15d1ab1e4c0fcb1644dc5a029c3133"};
 // The application shell files that are downloaded before a service worker can
 // start.
