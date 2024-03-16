@@ -35,8 +35,8 @@ class MobileListPage extends StatelessWidget {
                       wid: 40,
                       textSize: 12,
                       onPressed: () => goodleVM.signOut().then((_) {
-                      homeVM.loadData(context);
-                    }),
+                        homeVM.loadData(context);
+                      }),
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -164,7 +164,24 @@ class MobileListPage extends StatelessWidget {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      style: const TextStyle(
+                                      style: TextStyle(
+                                          color: (DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .year ==
+                                                      DateTime.now().year &&
+                                                  DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .month ==
+                                                      DateTime.now().month &&
+                                                  DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .day ==
+                                                      DateTime.now().day)
+                                              ? Colors.pink
+                                              : Colors.black,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w600),
                                       homeVM.todoItemList[i].name,
@@ -172,7 +189,24 @@ class MobileListPage extends StatelessWidget {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      style: const TextStyle(
+                                      style: TextStyle(
+                                          color: (DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .year ==
+                                                      DateTime.now().year &&
+                                                  DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .month ==
+                                                      DateTime.now().month &&
+                                                  DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .day ==
+                                                      DateTime.now().day)
+                                              ? Colors.pink
+                                              : Colors.black,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w600),
                                       homeVM.todoItemList[i].date,
@@ -180,7 +214,24 @@ class MobileListPage extends StatelessWidget {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      style: const TextStyle(
+                                      style: TextStyle(
+                                          color: (DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .year ==
+                                                      DateTime.now().year &&
+                                                  DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .month ==
+                                                      DateTime.now().month &&
+                                                  DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .day ==
+                                                      DateTime.now().day)
+                                              ? Colors.pink
+                                              : Colors.black,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w600),
                                       homeVM.todoItemList[i].note,

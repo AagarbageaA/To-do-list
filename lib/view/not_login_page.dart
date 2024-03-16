@@ -17,6 +17,29 @@ class NotLoginPage extends StatelessWidget {
                   color: Color.fromARGB(255, 202, 227, 236),
                   fontSize: 60,
                 ),
+                actions: [
+                  Row(children: [
+                    const SizedBox(width: 5),
+                    CustomElevatedButton(
+                      hei: 140,
+                      wid: 40,
+                      textSize: 20,
+                      onPressed: () => goodleVM.signInWithGoogle().then((_) {
+                        homeVM.loadData(context);
+                      }),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.login),
+                          SizedBox(width: 10),
+                          Text("Log in",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                  ])
+                ],
                 toolbarHeight: 100,
                 centerTitle: true,
                 backgroundColor: const Color.fromARGB(225, 7, 34, 45)),
@@ -28,29 +51,6 @@ class NotLoginPage extends StatelessWidget {
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height: double.infinity,
-                ),
-
-                //login botton position
-                Positioned(
-                  top: MediaQuery.of(context).size.height * 0.25,
-                  left: MediaQuery.of(context).size.width * 0.45,
-                  child: CustomElevatedButton(
-                    hei: 140,
-                    wid: 40,
-                    textSize: 20,
-                    onPressed: () => goodleVM.signInWithGoogle().then((_) {
-                      homeVM.loadData(context);
-                    }),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.login),
-                        SizedBox(width: 10),
-                        Text("Log in",
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                  ),
                 ),
               ],
             )));

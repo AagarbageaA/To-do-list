@@ -195,26 +195,126 @@ class ListPage extends StatelessWidget {
                                   ),
                                   Expanded(
                                     child: Text(
+                                      style: TextStyle(
+                                          color: (DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .year ==
+                                                      DateTime.now().year &&
+                                                  DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .month ==
+                                                      DateTime.now().month &&
+                                                  DateTime.parse(homeVM
+                                                                  .todoItemList[
+                                                                      i]
+                                                                  .date)
+                                                              .day -
+                                                          DateTime.now().day <=
+                                                      2)
+                                              ? Colors.pink
+                                              : Colors.black),
                                       homeVM.todoItemList[i].name,
                                     ),
                                   ),
                                   Expanded(
                                     child: Text(
+                                      style: TextStyle(
+                                          color: (DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .year ==
+                                                      DateTime.now().year &&
+                                                  DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .month ==
+                                                      DateTime.now().month &&
+                                                  DateTime.parse(homeVM
+                                                                  .todoItemList[
+                                                                      i]
+                                                                  .date)
+                                                              .day -
+                                                          DateTime.now().day <=
+                                                      2)
+                                              ? Colors.pink
+                                              : Colors.black),
                                       homeVM.todoItemList[i].date,
                                     ),
                                   ),
                                   Expanded(
                                     child: Text(
+                                      style: TextStyle(
+                                          color: (DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .year ==
+                                                      DateTime.now().year &&
+                                                  DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .month ==
+                                                      DateTime.now().month &&
+                                                  DateTime.parse(homeVM
+                                                                  .todoItemList[
+                                                                      i]
+                                                                  .date)
+                                                              .day -
+                                                          DateTime.now().day <=
+                                                      2)
+                                              ? Colors.pink
+                                              : Colors.black),
                                       homeVM.todoItemList[i].place,
                                     ),
                                   ),
                                   Expanded(
                                     child: Text(
+                                      style: TextStyle(
+                                          color: (DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .year ==
+                                                      DateTime.now().year &&
+                                                  DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .month ==
+                                                      DateTime.now().month &&
+                                                  DateTime.parse(homeVM
+                                                                  .todoItemList[
+                                                                      i]
+                                                                  .date)
+                                                              .day -
+                                                          DateTime.now().day <=
+                                                      2)
+                                              ? Colors.pink
+                                              : Colors.black),
                                       homeVM.todoItemList[i].note,
                                     ),
                                   ),
                                   Expanded(
                                     child: Text(
+                                      style: TextStyle(
+                                          color: (DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .year ==
+                                                      DateTime.now().year &&
+                                                  DateTime.parse(homeVM
+                                                              .todoItemList[i]
+                                                              .date)
+                                                          .month ==
+                                                      DateTime.now().month &&
+                                                  DateTime.parse(homeVM
+                                                                  .todoItemList[
+                                                                      i]
+                                                                  .date)
+                                                              .day -
+                                                          DateTime.now().day <=
+                                                      2)
+                                              ? Colors.pink
+                                              : Colors.black),
                                       homeVM.todoItemList[i].folder,
                                     ),
                                   ),

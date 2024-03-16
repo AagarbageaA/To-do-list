@@ -12,29 +12,18 @@ class MobileNotLoginPage extends StatelessWidget {
     return Consumer2<GoogleViewModel, DataViewModel>(
         builder: (context, goodleVM, homeVM, child) => Scaffold(
             appBar: AppBar(
-                title: const Text('To-do List '),
-                titleTextStyle: const TextStyle(
-                  color: Color.fromARGB(255, 202, 227, 236),
-                  fontSize: 60,
-                ),
-                toolbarHeight: 100,
-                centerTitle: true,
-                backgroundColor: const Color.fromARGB(225, 7, 34, 45)),
-            body: Stack(
-              children: [
-                //background picture
-                Image.asset(
-                  'lib/picture/shiba_wallpaper.jpg',
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: double.infinity,
-                ),
-
-                //login botton position
-                Positioned(
-                  top: MediaQuery.of(context).size.height * 0.25,
-                  left: MediaQuery.of(context).size.width * 0.45,
-                  child: CustomElevatedButton(
+              title: const Text('To-do List '),
+              titleTextStyle: const TextStyle(
+                color: Color.fromARGB(255, 202, 227, 236),
+                fontSize: 60,
+              ),
+              toolbarHeight: 100,
+              centerTitle: true,
+              backgroundColor: const Color.fromARGB(225, 7, 34, 45),
+              actions: [
+                Row(children: [
+                  const SizedBox(width: 5),
+                  CustomElevatedButton(
                     hei: 110,
                     wid: 40,
                     textSize: 12,
@@ -51,6 +40,18 @@ class MobileNotLoginPage extends StatelessWidget {
                       ],
                     ),
                   ),
+                  const SizedBox(width: 5),
+                ])
+              ],
+            ),
+            body: Stack(
+              children: [
+                //background picture
+                Image.asset(
+                  'lib/picture/shiba_wallpaper.jpg',
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
                 ),
               ],
             )));
