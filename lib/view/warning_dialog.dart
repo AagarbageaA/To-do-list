@@ -21,7 +21,7 @@ class WarningDialog extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop(); // Close the dialog
           },
-          child: const Text('OK',
+          child: const Text('OKkkk',
               style: TextStyle(color: Color.fromARGB(198, 7, 34, 45))),
         ),
       ],
