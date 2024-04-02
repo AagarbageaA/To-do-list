@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_template/model/user.dart';
 import 'package:flutter_application_template/view/add_folder_dialog.dart';
+import 'package:flutter_application_template/view/warning_dialog.dart';
 import 'package:flutter_application_template/view_model/google.dart';
 import 'package:flutter_application_template/view_model/data_view_model.dart';
 import 'package:flutter_application_template/widget/elevated_button.dart';
@@ -184,7 +185,16 @@ class AddEventPage extends StatelessWidget {
                       ischecked: false,
                     );
 
-                    onSubmit(tempTodoItem);
+                    if (name.isNotEmpty && date.isNotEmpty) {
+                      onSubmit(tempTodoItem);
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const WarningDialog();
+                        },
+                      );
+                    }
                   },
                   child: const Text('Submit'),
                 ),
