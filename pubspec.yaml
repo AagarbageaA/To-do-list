@@ -44,6 +44,7 @@ dependencies:
     git:
       url: https://github.com/mduccc/flutter_calendar_week
       ref: 3.0.2
+  gap: ^3.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

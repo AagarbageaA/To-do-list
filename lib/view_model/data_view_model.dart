@@ -8,6 +8,7 @@ class DataViewModel extends ChangeNotifier {
   List<TodoItem> todoItemList = [];
   List<String> folderList = [];
   String selectedFolder = 'All';
+  bool visible = false;
 
   void addFolder(String newFolderName, BuildContext context) {
     if (!folderList.contains(newFolderName)) {
@@ -51,6 +52,19 @@ class DataViewModel extends ChangeNotifier {
 
   void changeCheckState(int index, BuildContext context) {
     todoItemList[index].ischecked = !todoItemList[index].ischecked;
+    notifyListeners();
+    upload(context);
+  }
+
+  void changeVisibleState(BuildContext context) {
+    visible = !visible;
+    notifyListeners();
+    upload(context);
+  }
+
+  void editTodoItem(int index, TodoItem newitem, BuildContext context) {
+    todoItemList[index] = newitem;
+    todoItemList.sort((a, b) => a.date.compareTo(b.date));
     notifyListeners();
     upload(context);
   }
