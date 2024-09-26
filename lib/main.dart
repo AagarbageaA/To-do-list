@@ -10,7 +10,9 @@ import 'package:flutter_application_template/view_model/google.dart';
 import 'package:flutter_application_template/view_model/data_view_model.dart';
 import 'package:flutter_application_template/view_model/platform_view_model.dart';
 import 'package:provider/provider.dart';
+import 'view/card_list.dart';
 import 'view/home_page.dart';
+import 'view/mobile_card_list.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,7 +46,9 @@ class MyApp extends StatelessWidget {
             'calendar_page_route': (context) => const CalendarPage(),
             'mobile_list_page_route': (context) => const MobileListPage(),
             'mobile_calendar_page_route': (context) =>
-                const MobileCalendarPage()
+                const MobileCalendarPage(),
+            'card_page_route':(context)=>const CardList(),
+            'mobile_card_page_route':(context)=>const MobileCardList(),
           },
         ));
   }

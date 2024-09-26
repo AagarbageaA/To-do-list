@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_template/model/user.dart';
+import 'package:flutter_application_template/view/add_event_page.dart';
 import 'package:flutter_application_template/view_model/google.dart';
 import 'package:flutter_application_template/view_model/data_view_model.dart';
 import 'package:flutter_application_template/widget/elevated_button.dart';
@@ -38,7 +40,7 @@ class _CalendarPageState extends State<MobileCalendarPage> {
                 backgroundColor: const Color.fromARGB(255, 7, 34, 45),
                 titleTextStyle: const TextStyle(
                   color: Color.fromRGBO(255, 255, 255, 1),
-                  fontSize: 15,
+                  fontSize: 30,
                 ),
                 toolbarHeight: 80,
                 title: Row(children: [
@@ -47,16 +49,19 @@ class _CalendarPageState extends State<MobileCalendarPage> {
                     width: 50, // 調整圖片的大小
                     height: 50,
                   ),
-                  const Text('To-do List')
+                  const Text(
+                    'To-do List',
+                    style: TextStyle(fontSize: 15),
+                  )
                 ]),
                 actions: [
                   Row(children: [
                     const ToggleButton(),
-                    const SizedBox(width: 5),
+                    const SizedBox(width: 20),
                     CustomElevatedButton(
-                      hei: 115,
+                      hei: 120,
                       wid: 40,
-                      textSize: 12,
+                      textSize: 15,
                       onPressed: () =>
                           context.read<GoogleViewModel>().signOut(),
                       child: const Row(
@@ -65,12 +70,11 @@ class _CalendarPageState extends State<MobileCalendarPage> {
                           Icon(Icons.login),
                           SizedBox(width: 10),
                           Text("Log out",
-                              style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 5),
+                    const SizedBox(width: 20),
                   ])
                 ],
               ),
@@ -85,7 +89,7 @@ class _CalendarPageState extends State<MobileCalendarPage> {
                     ]),
                     child: CalendarWeek(
                       controller: _controller,
-                      height: 150,
+                      height: 130,
                       dayOfWeekStyle: const TextStyle(
                           color: Color.fromARGB(240, 7, 25, 60)),
                       dateStyle: const TextStyle(
@@ -101,12 +105,12 @@ class _CalendarPageState extends State<MobileCalendarPage> {
                       maxDate: DateTime.now().add(
                         const Duration(days: 365),
                       ),
-                      onDatePressed: (datetime) {
+                      onWeekChanged: () {
                         setState(() {});
                       },
                       monthViewBuilder: (DateTime time) => Align(
                         alignment: FractionalOffset.center,
-                        child: Column(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             // 日曆圖示
@@ -159,47 +163,125 @@ class _CalendarPageState extends State<MobileCalendarPage> {
                       ],
                     )),
                 Expanded(
-                  child: ListView(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-                    children: context
-                        .watch<DataViewModel>()
-                        .todoItemList
-                        .where((todo) =>
-                            DateTime.parse(todo.date).year ==
-                                _controller.selectedDate.year &&
-                            DateTime.parse(todo.date).month ==
-                                _controller.selectedDate.month &&
-                            DateTime.parse(todo.date).day ==
-                                _controller.selectedDate.day)
-                        .map(
-                          (todo) => Container(
-                            height: 45,
-                            padding: const EdgeInsets.all(8.0),
-                            margin: const EdgeInsets.all(4.0),
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(14, 16, 30, 124),
-                              border: Border.all(
-                                  color: const Color.fromARGB(108, 68, 73, 98)),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: Center(
-                                child: Text(
-                              "${todo.name} ${todo.note} ${todo.place}",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                                decoration: todo.ischecked
-                                    ? TextDecoration.lineThrough
-                                    : TextDecoration.none,
-                              ),
-                            )),
-                          ),
-                        )
-                        .toList(),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: calendarBlock(1),
+                      ),
+                      const VerticalDivider(
+                          width: 0,
+                          thickness: 0.2,
+                          color: Color.fromARGB(164, 9, 38, 63),
+                          indent: 5),
+                      Expanded(
+                        child: calendarBlock(2),
+                      ),
+                      const VerticalDivider(
+                          width: 0,
+                          thickness: 0.2,
+                          color: Color.fromARGB(164, 9, 38, 63),
+                          indent: 5),
+                      Expanded(
+                        child: calendarBlock(3),
+                      ),
+                      const VerticalDivider(
+                          width: 0,
+                          thickness: 0.2,
+                          color: Color.fromARGB(164, 9, 38, 63),
+                          indent: 5),
+                      Expanded(
+                        child: calendarBlock(4),
+                      ),
+                      const VerticalDivider(
+                          width: 0,
+                          thickness: 0.2,
+                          color: Color.fromARGB(164, 9, 38, 63),
+                          indent: 5),
+                      Expanded(
+                        child: calendarBlock(5),
+                      ),
+                      const VerticalDivider(
+                          width: 0,
+                          thickness: 0.2,
+                          color: Color.fromARGB(164, 9, 38, 63),
+                          indent: 5),
+                      Expanded(
+                        child: calendarBlock(6),
+                      ),
+                      const VerticalDivider(
+                          width: 0,
+                          thickness: 0.2,
+                          color: Color.fromARGB(164, 9, 38, 63),
+                          indent: 5),
+                      Expanded(
+                        child: calendarBlock(7),
+                      ),
+                    ],
                   ),
-                ),
+                )
               ]),
+              floatingActionButton: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  FloatingActionButton(
+                    heroTag: "btn2",
+                    backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                    splashColor: const Color.fromARGB(255, 7, 34, 45),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: const BorderSide(
+                        color: Color.fromARGB(139, 7, 34, 45),
+                        width: 4,
+                        // strokeAlign: -1, // Not needed
+                      ),
+                    ),
+                    onPressed: () {
+                      _controller.jumpToDate(DateTime.now());
+                      setState(() {});
+                    },
+                    child: const Icon(Icons.today),
+                  ),
+                ],
+              ),
             ));
+  }
+
+  Widget calendarBlock(int day) {
+    return ListView(
+      padding: EdgeInsets.all(0),
+      children: context
+          .watch<DataViewModel>()
+          .todoItemList
+          .where((todo) =>
+              _isTodoForCurrentWeek(todo) &&
+              DateTime.parse(todo.date).weekday ==
+                  day) // Filter todo items for Thursday
+          .map((todo) => ListTile(
+                title: Text("${todo.name} ${todo.note}",
+                    style: TextStyle(
+                        decoration: todo.ischecked
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                        fontSize: 8)),
+              ))
+          .toList(),
+    );
+  }
+
+  bool _isTodoForCurrentWeek(TodoItem todo) {
+    if (_controller.rangeWeekDate.isEmpty) return false;
+
+    final firstDayOfCurrentWeek = _controller.rangeWeekDate.first;
+    final lastDayOfCurrentWeek = _controller.rangeWeekDate.last;
+
+    // Convert todo.date from String to DateTime
+    final todoDate = DateTime.parse(todo.date);
+
+    // Check if the todo's date falls within the current week
+    return firstDayOfCurrentWeek != null &&
+        lastDayOfCurrentWeek != null &&
+        todoDate
+            .isAfter(firstDayOfCurrentWeek.subtract(const Duration(days: 1))) &&
+        todoDate.isBefore(lastDayOfCurrentWeek);
   }
 }

@@ -16,9 +16,9 @@ class _MyWidgetState extends State<ToggleButton> {
     return ToggleButtons(
         constraints: const BoxConstraints(
           maxHeight: 40,
-          maxWidth: 60,
+          maxWidth: 50,
           minHeight: 40,
-          minWidth: 60,
+          minWidth: 50,
         ),
         // list of booleans
         isSelected: isSelected,
@@ -69,8 +69,8 @@ class _MyWidgetState extends State<ToggleButton> {
           final isListPage = newIndex == 0;
           final page = isListPage
               ? (MediaQuery.of(context).size.width >= Platform.computer.minWidth
-                  ? 'list_page_route'
-                  : 'mobile_list_page_route')
+                  ? 'card_page_route'
+                  : 'mobile_card_page_route')
               : (MediaQuery.of(context).size.width >= Platform.computer.minWidth
                   ? 'calendar_page_route'
                   : 'mobile_calendar_page_route');
