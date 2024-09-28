@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_template/model/user.dart';
-import 'package:flutter_application_template/view/add_event_page.dart';
 import 'package:flutter_application_template/view_model/google.dart';
 import 'package:flutter_application_template/view_model/data_view_model.dart';
 import 'package:flutter_application_template/widget/elevated_button.dart';
@@ -168,51 +167,27 @@ class _CalendarPageState extends State<MobileCalendarPage> {
                       Expanded(
                         child: calendarBlock(1),
                       ),
-                      const VerticalDivider(
-                          width: 0,
-                          thickness: 0.2,
-                          color: Color.fromARGB(164, 9, 38, 63),
-                          indent: 5),
+                      Container(width: 0.5,height: double.infinity,color: Colors.black,),
                       Expanded(
                         child: calendarBlock(2),
                       ),
-                      const VerticalDivider(
-                          width: 0,
-                          thickness: 0.2,
-                          color: Color.fromARGB(164, 9, 38, 63),
-                          indent: 5),
+                      Container(width: 0.5,height: double.infinity,color: Colors.black,),
                       Expanded(
                         child: calendarBlock(3),
                       ),
-                      const VerticalDivider(
-                          width: 0,
-                          thickness: 0.2,
-                          color: Color.fromARGB(164, 9, 38, 63),
-                          indent: 5),
+                      Container(width: 0.5,height: double.infinity,color: Colors.black,),
                       Expanded(
                         child: calendarBlock(4),
                       ),
-                      const VerticalDivider(
-                          width: 0,
-                          thickness: 0.2,
-                          color: Color.fromARGB(164, 9, 38, 63),
-                          indent: 5),
+                      Container(width: 0.5,height: double.infinity,color: Colors.black,),
                       Expanded(
                         child: calendarBlock(5),
                       ),
-                      const VerticalDivider(
-                          width: 0,
-                          thickness: 0.2,
-                          color: Color.fromARGB(164, 9, 38, 63),
-                          indent: 5),
+                      Container(width: 0.5,height: double.infinity,color: Colors.black,),
                       Expanded(
                         child: calendarBlock(6),
                       ),
-                      const VerticalDivider(
-                          width: 0,
-                          thickness: 0.2,
-                          color: Color.fromARGB(164, 9, 38, 63),
-                          indent: 5),
+                      Container(width: 0.5,height: double.infinity,color: Colors.black,),
                       Expanded(
                         child: calendarBlock(7),
                       ),
@@ -248,16 +223,15 @@ class _CalendarPageState extends State<MobileCalendarPage> {
 
   Widget calendarBlock(int day) {
     return ListView(
-      padding: EdgeInsets.all(0),
+      padding: EdgeInsets.zero, // 移除 ListView 的 padding
       children: context
           .watch<DataViewModel>()
           .todoItemList
           .where((todo) =>
               _isTodoForCurrentWeek(todo) &&
-              DateTime.parse(todo.date).weekday ==
-                  day) // Filter todo items for Thursday
+              DateTime.parse(todo.date).weekday == day)
           .map((todo) => ListTile(
-                title: Text("${todo.name} ${todo.note}",
+                title: Text(todo.name,
                     style: TextStyle(
                         decoration: todo.ischecked
                             ? TextDecoration.lineThrough

@@ -7,6 +7,7 @@ import 'package:flutter_application_template/view_model/data_view_model.dart';
 import 'package:provider/provider.dart';
 
 import 'card_list.dart';
+import 'mobile_card_list.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -17,15 +18,15 @@ class HomePage extends StatelessWidget {
       if (context.watch<GoogleViewModel>().user == null) {
         return const NotLoginPage();
       } else {
-        context.read<DataViewModel>().loadData(context);
+        context.watch<DataViewModel>().loadData(context);
         return const CardList();
       }
     } else {
       if (context.watch<GoogleViewModel>().user == null) {
         return const MobileNotLoginPage();
       } else {
-        context.read<DataViewModel>().loadData(context);
-        return const CardList();
+        context.watch<DataViewModel>().loadData(context);
+        return const MobileCardList();
       }
     }
   }
