@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../view_model/data_view_model.dart';
@@ -6,13 +8,24 @@ import '../view_model/google.dart';
 import '../widget/card.dart';
 import '../widget/elevated_button.dart';
 import '../widget/toggle.dart';
+import 'add_event_page.dart';
 import 'add_folder_dialog.dart';
 import 'delete_folder_dialog.dart';
 import 'edit_event_page.dart';
 
 class CardList extends StatelessWidget {
-  const CardList({super.key});
+    const CardList({super.key});
+    String formattedDate(String dateStr) {
+      // 解析日期字符串
+      DateTime date = DateTime.parse(dateStr);
 
+      // 使用DateFormat來獲取星期幾
+      String dayOfWeek = DateFormat('EEEE').format(date); // 'EEEE' 表示完整的星期幾
+      String formatted = DateFormat('yyyy-MM-dd').format(date); // 保留原本的日期格式
+
+      // 返回格式化後的結果
+      return '$formatted ($dayOfWeek)';
+    }
   @override
   Widget build(BuildContext context) {
     return Consumer2<GoogleViewModel, DataViewModel>(
@@ -157,7 +170,7 @@ class CardList extends StatelessWidget {
                               ExtensionCard(
                                 isChecked: homeVM.todoItemList[i].ischecked,
                                 title: homeVM.todoItemList[i].name,
-                                date: homeVM.todoItemList[i].date,
+                                date: formattedDate(homeVM.todoItemList[i].date),
                                 note: homeVM.todoItemList[i].note,
                                 place: homeVM.todoItemList[i].place,
                                 folder: homeVM.todoItemList[i].folder,
@@ -200,7 +213,7 @@ class CardList extends StatelessWidget {
                               ExtensionCard(
                                 isChecked: homeVM.todoItemList[i].ischecked,
                                 title: homeVM.todoItemList[i].name,
-                                date: homeVM.todoItemList[i].date,
+                                date: formattedDate(homeVM.todoItemList[i].date),
                                 note: homeVM.todoItemList[i].note,
                                 place: homeVM.todoItemList[i].place,
                                 folder: homeVM.todoItemList[i].folder,
@@ -237,6 +250,60 @@ class CardList extends StatelessWidget {
                       )
                     ],
                   )),
+                  floatingActionButton: Align(
+  alignment: Alignment.bottomCenter,
+  child: ConstrainedBox(
+    constraints: const BoxConstraints( maxWidth: 1000,),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        ColorFiltered(
+          colorFilter: ColorFilter.mode(
+            Colors.black.withOpacity(0.6), 
+            BlendMode.dstIn, 
+          ),
+          child: Image.asset(
+            'lib/picture/shiba_icon.png',
+            fit: BoxFit.cover,
+            width: 200,
+            height: 200,
+          ),
+        ),
+        FloatingActionButton(
+          heroTag: "btn1",
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          splashColor: const Color.fromARGB(255, 7, 34, 45),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            side: const BorderSide(
+              color: Color.fromARGB(139, 7, 34, 45),
+              width: 4,
+            ),
+          ),
+          onPressed: () {
+            showModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) {
+                return AddEventPage(
+                  onSubmit: (data) {
+                    homeVM.addTodoItem(data, context);
+                    Navigator.of(context).pop();
+                  },
+                  folderList: homeVM.folderList,
+                  onAddFolder: (folderName) => context
+                      .read<DataViewModel>()
+                      .addFolder(folderName, context),
+                );
+              },
+            );
+          },
+          child: const Icon(Icons.add,
+              color: Color.fromARGB(255, 7, 34, 45)),
+        ),
+      ],
+    ),
+  ),
+),
             ));
   }
 }

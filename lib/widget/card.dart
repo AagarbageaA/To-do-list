@@ -93,13 +93,13 @@ class _ExtensionCardState extends State<ExtensionCard>
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Color.fromARGB(97, 101, 6, 6),
-                        Color.fromARGB(146, 4, 34, 75),
+                        Color.fromARGB(180, 96, 175, 120),
+                        Color.fromARGB(149, 68, 110, 168),
                       ],
                     ),
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
-                  width: 600,
+                  width: 800,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -121,32 +121,26 @@ class _ExtensionCardState extends State<ExtensionCard>
                                           value: widget.isChecked,
                                           onChanged: widget.onCkeckedChange),
                                       const SizedBox(width: 5),
-                                      Center(
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              padding: const EdgeInsets.fromLTRB(
-                                                  12, 3, 12, 3),
-                                              decoration: const BoxDecoration(
-                                                color: Color.fromARGB(
-                                                    39, 201, 113, 144),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(20)),
-                                              ),
-                                              child: Text(
-                                                widget.title,
-                                                style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
+                                      Flexible(
+                                                fit: FlexFit.tight,
+                                                child: Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 3),
+                                                  child: Text(
+                                                    widget.title,
+                                                    style: const TextStyle(
+                                                        fontSize: 15),
+                                                    overflow: TextOverflow
+                                                        .visible, // Ensures text doesn't overflow
+                                                    softWrap:
+                                                        true, // Allows text to wrap
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            const SizedBox(width: 12),
-                                            Text(
+                                      const SizedBox(width: 5,),
+                                      Row(
+                                        children: [
+                                          Text(
                                               widget.date,
                                               style: const TextStyle(
                                                 fontSize: 12,
@@ -155,12 +149,6 @@ class _ExtensionCardState extends State<ExtensionCard>
                                                     Color.fromARGB(66, 0, 0, 0),
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                      const Spacer(),
-                                      Row(
-                                        children: [
                                           IconButton(
                                             onPressed: widget.onEdit, // 修改
                                             icon: const Icon(Icons

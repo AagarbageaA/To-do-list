@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../view_model/data_view_model.dart';
@@ -11,7 +12,17 @@ import 'delete_folder_dialog.dart';
 
 class MobileCardList extends StatelessWidget {
   const MobileCardList({super.key});
+  String formattedDate(String dateStr) {
+      // 解析日期字符串
+      DateTime date = DateTime.parse(dateStr);
 
+      // 使用DateFormat來獲取星期幾
+      String dayOfWeek = DateFormat('EEEE').format(date); // 'EEEE' 表示完整的星期幾
+      String formatted = DateFormat('MM-dd').format(date); // 保留原本的日期格式
+
+      // 返回格式化後的結果
+      return '$formatted-$dayOfWeek';
+    }
   @override
   Widget build(BuildContext context) {
     return Consumer2<GoogleViewModel, DataViewModel>(
@@ -152,7 +163,7 @@ class MobileCardList extends StatelessWidget {
                               MobileExtensionCard(
                                 isChecked: homeVM.todoItemList[i].ischecked,
                                 title: homeVM.todoItemList[i].name,
-                                date: homeVM.todoItemList[i].date,
+                                date: formattedDate(homeVM.todoItemList[i].date),
                                 note: homeVM.todoItemList[i].note,
                                 place: homeVM.todoItemList[i].place,
                                 folder: homeVM.todoItemList[i].folder,
@@ -173,7 +184,7 @@ class MobileCardList extends StatelessWidget {
                               MobileExtensionCard(
                                 isChecked: homeVM.todoItemList[i].ischecked,
                                 title: homeVM.todoItemList[i].name,
-                                date: homeVM.todoItemList[i].date,
+                                date: (homeVM.todoItemList[i].date),
                                 note: homeVM.todoItemList[i].note,
                                 place: homeVM.todoItemList[i].place,
                                 folder: homeVM.todoItemList[i].folder,
